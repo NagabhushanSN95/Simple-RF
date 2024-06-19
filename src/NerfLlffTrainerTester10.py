@@ -14,11 +14,8 @@ import pandas
 import skimage.io
 import skvideo.io
 
-import gc
-import torch
-
-import Tester06 as Tester
-import Trainer09 as Trainer
+import Tester07 as Tester
+import Trainer10 as Trainer
 
 this_filepath = Path(__file__)
 this_filename = this_filepath.stem
@@ -134,8 +131,7 @@ def start_testing(test_configs: dict):
           f'--pred_frames_dirname predicted_frames ' \
           f'--pred_depths_dirname predicted_depths ' \
           f'--mask_folder_name {test_configs["qa_masks_dirname"]} ' \
-          f'--resolution_suffix _down4 ' \
-          # f'--chat_names Nagabhushan Harsha'
+          f'--resolution_suffix _down4'
     os.system(cmd)
     return
 
@@ -254,17 +250,16 @@ def start_testing_static_videos(test_configs: dict):
     return
 
 
-def demo1b() -> None:
-    train_num = 1251
-    test_num = 1251
-    # scene_names = ['fern', 'flower', 'fortress', 'horns', 'leaves', 'orchids', 'room', 'trex']
-    scene_names = ['horns']
+def demo1a() -> None:
+    train_num = 1061
+    test_num = 1061
+    scene_names = ['fern', 'flower', 'fortress', 'horns', 'leaves', 'orchids', 'room', 'trex']
 
     for scene_name in scene_names:
         train_configs = {
             'trainer': f'{this_filename}/{Trainer.this_filename}',
             'train_num': train_num,
-            'description': 'NeRF - two views',
+            'description': 'Simple-NeRF: 2 views',
             'database': 'NeRF_LLFF',
             'database_dirpath': 'databases/NeRF_LLFF/data',
             'data_loader': {
@@ -295,12 +290,12 @@ def demo1b() -> None:
                     # 'dirname': 'PEL001_PDE03',
                 },
                 'sparse_depth': {
-                    'dirname': 'DEL001_DE02',
+                    'dirname': 'DE02',
                     'num_rays': 2048,
                 },
             },
             'model': {
-                'name': 'NeRF16',
+                'name': 'SimpleNeRF17',
                 'coarse_model': {
                     'num_samples': 64,
                     'points_net_depth': 8,
@@ -389,41 +384,21 @@ def demo1b() -> None:
             },
             'losses': [
                 {
-                    'name': 'MSE12',
+                    'name': 'MSE14',
                     'weight': 1,
                 },
                 {
-                    'name': 'SparseDepthMSE12',
+                    'name': 'SparseDepthMSE14',
                     'weight': 0.1,
                 },
                 {
-                    'name': 'MSE13',
-                    'weight': 1,
-                },
-                {
-                    'name': 'SparseDepthMSE13',
-                    'weight': 0.1
-                },
-                # {
-                #     'name': 'AugmentationsDepthLoss07',
-                #     'iter_weights': {
-                #         '0': 0, '10000': 0.1
-                #     },
-                # },
-                {
-                    'name': 'AugmentationsDepthLoss15',
+                    'name': 'AugmentationsDepthLoss11',
                     'iter_weights': {
                         '0': 0, '10000': 0.1
                     },
                     'rmse_threshold': 0.1,
                     'patch_size': [5, 5],
                 },
-                # {
-                #     'name': 'CoarseFineConsistencyLoss33',
-                #     'iter_weights': {
-                #         '0': 0, '10000': 0.1
-                #     },
-                # },
                 {
                     'name': 'CoarseFineConsistencyLoss34',
                     'iter_weights': {
@@ -444,7 +419,7 @@ def demo1b() -> None:
                 },
             ],
             'resume_training': True,
-            'sub_batch_size': 2048,
+            'sub_batch_size': 4096,
             'num_iterations': 100000,
             'validation_interval': 1000000,
             'validation_chunk_size': 64 * 1024,
@@ -463,7 +438,7 @@ def demo1b() -> None:
             'model_name': f'Model_Iter{train_configs["num_iterations"]:06}.tar',
             'database_name': 'NeRF_LLFF',
             'database_dirpath': 'NeRF_LLFF/data',
-            'qa_masks_dirname': 'VSL001_VM02',
+            'qa_masks_dirname': 'VM02',
             'resolution_suffix': train_configs['data_loader']['resolution_suffix'],
             'scene_names': [scene_name],
             # 'optimize_camera_params': {
@@ -479,453 +454,16 @@ def demo1b() -> None:
     return
 
 
-def demo2a1() -> None:
-    train_num = 1437
-    test_num = 1437
-    # scene_names = ['fern', 'flower', 'fortress', 'horns', 'leaves', 'orchids', 'room', 'trex']
-    scene_names = ['horns']
-
-    for scene_name in scene_names:
-        train_configs = {
-            'trainer': f'{this_filename}/{Trainer.this_filename}',
-            'train_num': train_num,
-            'description': 'TensoRF - VectorMatrix - all views',
-            'database': 'NeRF_LLFF',
-            'database_dirpath': 'databases/NeRF_LLFF/data',
-            'data_loader': {
-                'data_loader_name': 'NerfLlffDataLoader07',
-                'data_preprocessor_name': 'DataPreprocessor09',
-                'train_set_num': 1,
-                'scene_names': [scene_name],
-                'resolution_suffix': '_down4',
-                'recenter_camera_poses': True,
-                'bd_factor': 0.75,
-                'spherify': False,
-                'ndc': True,
-                'batching': True,
-                'downsampling_factor': 1,
-                'num_rays': 4096,
-                'precrop_fraction': 1,
-                'precrop_iterations': -1,
-                'camera_params': {
-                    'load_database_intrinsics': True,
-                    'load_database_extrinsics': True,
-                    # 'load_noisy_intrinsics': True,
-                    # 'load_noisy_extrinsics': True,
-                    # 'dirname': 'PEL001_PDE03',
-                },
-                'scene_data': {
-                    'load_database_bounds': True,
-                    # 'load_noisy_bounds': True,
-                    # 'dirname': 'PEL001_PDE03',
-                },
-                # 'sparse_depth': {
-                #     'dirname': 'DEL001_DE03',
-                #     'num_rays': 2048,
-                # },
-            },
-            'model': {
-                'name': 'TensoRF07',
-                'coarse_model': {
-                    'decomposition_type': 'VectorMatrix',
-                    'num_samples_max': 1e6,
-                    'num_components_density': [16, 4, 4],
-                    'num_components_color': [48, 12, 12],
-                    'num_voxels_initial': 2097156,  # 128**3 + 4
-                    'num_voxels_final': 640**3,
-                    'tensor_upsampling_iters': [2000, 3000, 4000, 5500],
-                    'num_voxels_per_sample': 0.5,
-                    'alpha_mask_update_iters': [2500],
-                    'alpha_mask_threshold': 0.0001,
-                    'ray_marching_weight_threshold': 0.0001,
-                    'use_view_dirs': True,
-                    'view_dependent_color': True,
-                    # 'points_positional_encoding_degree': 10,
-                    'views_positional_encoding_degree': 0,
-                    'features_positional_encoding_degree': 0,
-                    'features_dimension_color': 27,
-                    'density_offset': -10,
-                    'distance_scale': 25,
-                    'density_predictor': 'ReLU',
-                    'color_predictor': 'MLP_Features',
-                    'num_units_color_predictor': 128,
-                    'predict_visibility': False,
-                },
-                'learn_camera_focal_length': False,
-                'learn_camera_rotation': False,
-                'learn_camera_translation': False,
-                'chunk': 4*1024,
-                'lindisp': False,
-                'perturb': True,
-                'white_bkgd': False,
-            },
-            'losses': [
-                {
-                    'name': 'MSE12',
-                    'weight': 1,
-                },
-                # {
-                #     'name': 'L1Loss01',
-                #     'weight': 0,
-                # },
-                {
-                    'name': 'TotalVariationLoss02',
-                    'weight': 1,
-                    'weight_density': 1e-2,
-                    'weight_color': 1e-2,
-                },
-            ],
-            'optimizers': [
-                {
-                    'name': 'optimizer_main',
-                    'beta1': 0.9,
-                    'beta2': 0.99,
-                    'lr_decayer_name': 'TensoRFLearningRateDecayer01',
-                    'lr_initial_tensor': 2e-2,
-                    'lr_initial_network': 1e-3,
-                    'lr_decay_ratio': 0.1,
-                    'lr_decay_iters': None,
-                },
-            ],
-            'resume_training': True,
-            'sub_batch_size': 2048,
-            'num_iterations': 25000,
-            'validation_interval': 100000,
-            'validation_chunk_size': 64 * 1024,
-            'validation_save_loss_maps': False,
-            'model_save_interval': 5000,
-            'mixed_precision_training': False,
-            'seed': numpy.random.randint(1000),
-            # 'seed': 0,
-            'device': [0, ],
-        }
-        test_configs = {
-            'Tester': f'{this_filename}/{Tester.this_filename}',
-            'test_num': test_num,
-            'test_set_num': 1,
-            'train_num': train_num,
-            'model_name': f'Model_Iter0{train_configs["num_iterations"]:05}.tar',
-            'database_name': 'NeRF_LLFF',
-            'database_dirpath': 'NeRF_LLFF/data',
-            'qa_masks_dirname': 'VSL001_VM01',
-            'resolution_suffix': train_configs['data_loader']['resolution_suffix'],
-            'scene_names': [scene_name],
-            # 'optimize_camera_params': {
-            #     'num_iterations': 1000,
-            #     'dirname': 'PEL001_PDE03',
-            # },
-            'device': [0, ],
-        }
-        start_training(train_configs)
-        start_testing(test_configs)
-        start_testing_videos(test_configs)
-        start_testing_static_videos(test_configs)
-    return
-
-
-def demo2a2() -> None:
-    train_num = 1438
-    test_num = 1438
-    # scene_names = ['fern', 'flower', 'fortress', 'horns', 'leaves', 'orchids', 'room', 'trex']
-    scene_names = ['horns']
-
-    for scene_name in scene_names:
-        train_configs = {
-            'trainer': f'{this_filename}/{Trainer.this_filename}',
-            'train_num': train_num,
-            'description': 'TensoRF - CandecompParafac - all views',
-            'database': 'NeRF_LLFF',
-            'database_dirpath': 'databases/NeRF_LLFF/data',
-            'data_loader': {
-                'data_loader_name': 'NerfLlffDataLoader07',
-                'data_preprocessor_name': 'DataPreprocessor09',
-                'train_set_num': 1,
-                'scene_names': [scene_name],
-                'resolution_suffix': '_down4',
-                'recenter_camera_poses': True,
-                'bd_factor': 0.75,
-                'spherify': False,
-                'ndc': True,
-                'batching': True,
-                'downsampling_factor': 1,
-                'num_rays': 4096,
-                'precrop_fraction': 1,
-                'precrop_iterations': -1,
-                'camera_params': {
-                    'load_database_intrinsics': True,
-                    'load_database_extrinsics': True,
-                    # 'load_noisy_intrinsics': True,
-                    # 'load_noisy_extrinsics': True,
-                    # 'dirname': 'PEL001_PDE03',
-                },
-                'scene_data': {
-                    'load_database_bounds': True,
-                    # 'load_noisy_bounds': True,
-                    # 'dirname': 'PEL001_PDE03',
-                },
-                # 'sparse_depth': {
-                #     'dirname': 'DEL001_DE03',
-                #     'num_rays': 2048,
-                # },
-            },
-            'model': {
-                'name': 'TensoRF07',
-                'coarse_model': {
-                    'decomposition_type': 'CandecompParafac',
-                    'num_samples_max': 1e6,
-                    'num_components_density': [24],
-                    'num_components_color': [72],
-                    'num_voxels_initial': 2097156,  # 128**3 + 4
-                    'num_voxels_final': 640 ** 3,
-                    'tensor_upsampling_iters': [2000, 3000, 4000, 5500],
-                    'num_voxels_per_sample': 0.5,
-                    'alpha_mask_update_iters': [2500],
-                    'alpha_mask_threshold': 0.0001,
-                    'ray_marching_weight_threshold': 0.0001,
-                    'use_view_dirs': True,
-                    'view_dependent_color': True,
-                    # 'points_positional_encoding_degree': 10,
-                    'views_positional_encoding_degree': 0,
-                    'features_positional_encoding_degree': 0,
-                    'features_dimension_color': 27,
-                    'density_offset': -10,
-                    'distance_scale': 25,
-                    'density_predictor': 'ReLU',
-                    'color_predictor': 'MLP_Features',
-                    'num_units_color_predictor': 128,
-                    'predict_visibility': False,
-                },
-                'learn_camera_focal_length': False,
-                'learn_camera_rotation': False,
-                'learn_camera_translation': False,
-                'chunk': 4*1024,
-                'lindisp': False,
-                'perturb': True,
-                'white_bkgd': False,
-            },
-            'losses': [
-                {
-                    'name': 'MSE12',
-                    'weight': 1,
-                },
-                {
-                    'name': 'L1Loss01',
-                    'weight': 1e-5,
-                },
-                {
-                    'name': 'TotalVariationLoss02',
-                    'weight': 1,
-                    'weight_density': 1e-3,
-                    'weight_color': 1e-3,
-                },
-            ],
-            'optimizers': [
-                {
-                    'name': 'optimizer_main',
-                    'beta1': 0.9,
-                    'beta2': 0.99,
-                    'lr_decayer_name': 'TensoRFLearningRateDecayer01',
-                    'lr_initial_tensor': 2e-2,
-                    'lr_initial_network': 1e-3,
-                    'lr_decay_ratio': 0.1,
-                    'lr_decay_iters': None,
-                },
-            ],
-            'resume_training': True,
-            'sub_batch_size': 2048,
-            'num_iterations': 25000,
-            'validation_interval': 100000,
-            'validation_chunk_size': 64 * 1024,
-            'validation_save_loss_maps': False,
-            'model_save_interval': 5000,
-            'mixed_precision_training': False,
-            'seed': numpy.random.randint(1000),
-            # 'seed': 0,
-            'device': [0, ],
-        }
-        test_configs = {
-            'Tester': f'{this_filename}/{Tester.this_filename}',
-            'test_num': test_num,
-            'test_set_num': 1,
-            'train_num': train_num,
-            'model_name': f'Model_Iter0{train_configs["num_iterations"]:05}.tar',
-            'database_name': 'NeRF_LLFF',
-            'database_dirpath': 'NeRF_LLFF/data',
-            'qa_masks_dirname': 'VSL001_VM01',
-            'resolution_suffix': train_configs['data_loader']['resolution_suffix'],
-            'scene_names': [scene_name],
-            # 'optimize_camera_params': {
-            #     'num_iterations': 1000,
-            #     'dirname': 'PEL001_PDE03',
-            # },
-            'device': [0, ],
-        }
-        start_training(train_configs)
-        start_testing(test_configs)
-        start_testing_videos(test_configs)
-        start_testing_static_videos(test_configs)
-    return
-
-
-def demo2b3() -> None:
-    train_num = 1441
-    test_num = 1441
+def demo1b() -> None:
+    train_num = 1142
+    test_num = 1142
     scene_names = ['fern', 'flower', 'fortress', 'horns', 'leaves', 'orchids', 'room', 'trex']
-    # scene_names = ['flower', 'horns', 'room']
 
     for scene_name in scene_names:
         train_configs = {
             'trainer': f'{this_filename}/{Trainer.this_filename}',
             'train_num': train_num,
-            'description': 'TensoRF - VectorMatrix - 3 views',
-            'database': 'NeRF_LLFF',
-            'database_dirpath': 'databases/NeRF_LLFF/data',
-            'data_loader': {
-                'data_loader_name': 'NerfLlffDataLoader07',
-                'data_preprocessor_name': 'DataPreprocessor09',
-                'train_set_num': 3,
-                'scene_names': [scene_name],
-                'resolution_suffix': '_down4',
-                'recenter_camera_poses': True,
-                'bd_factor': 0.75,
-                'spherify': False,
-                'ndc': True,
-                'batching': True,
-                'downsampling_factor': 1,
-                'num_rays': 4096,
-                'precrop_fraction': 1,
-                'precrop_iterations': -1,
-                'camera_params': {
-                    'load_database_intrinsics': True,
-                    'load_database_extrinsics': True,
-                    # 'load_noisy_intrinsics': True,
-                    # 'load_noisy_extrinsics': True,
-                    # 'dirname': 'PEL001_PDE03',
-                },
-                'scene_data': {
-                    'load_database_bounds': True,
-                    # 'load_noisy_bounds': True,
-                    # 'dirname': 'PEL001_PDE03',
-                },
-                # 'sparse_depth': {
-                #     'dirname': 'DEL001_DE03',
-                #     'num_rays': 2048,
-                # },
-            },
-            'model': {
-                'name': 'TensoRF07',
-                'coarse_model': {
-                    'decomposition_type': 'VectorMatrix',
-                    'num_samples_max': 1e6,
-                    'num_components_density': [16, 4, 4],
-                    'num_components_color': [48, 12, 12],
-                    'num_voxels_initial': 2097156,  # 128**3 + 4
-                    'num_voxels_final': 640 ** 3,
-                    'tensor_upsampling_iters': [2000, 3000, 4000, 5500],
-                    'num_voxels_per_sample': 0.5,
-                    'alpha_mask_update_iters': [2500],
-                    'alpha_mask_threshold': 0.0001,
-                    'ray_marching_weight_threshold': 0.0001,
-                    'use_view_dirs': True,
-                    'view_dependent_color': True,
-                    # 'points_positional_encoding_degree': 10,
-                    'views_positional_encoding_degree': 0,
-                    'features_positional_encoding_degree': 0,
-                    'features_dimension_color': 27,
-                    'density_offset': -10,
-                    'distance_scale': 25,
-                    'density_predictor': 'ReLU',
-                    'color_predictor': 'MLP_Features',
-                    'num_units_color_predictor': 128,
-                    'predict_visibility': False,
-                },
-                'learn_camera_focal_length': False,
-                'learn_camera_rotation': False,
-                'learn_camera_translation': False,
-                'chunk': 4 * 1024,
-                'lindisp': False,
-                'perturb': True,
-                'white_bkgd': False,
-            },
-            'losses': [
-                {
-                    'name': 'MSE12',
-                    'weight': 1,
-                },
-                # {
-                #     'name': 'SparseDepthMSE12',
-                #     'weight': 0.1,
-                # },
-                # {
-                #     'name': 'L1Loss01',
-                #     'weight': 0,
-                # },
-                {
-                    'name': 'TotalVariationLoss02',
-                    'weight': 1,
-                    'weight_density': 1e-2,
-                    'weight_color': 1e-2,
-                },
-            ],
-            'optimizers': [
-                {
-                    'name': 'optimizer_main',
-                    'beta1': 0.9,
-                    'beta2': 0.99,
-                    'lr_decayer_name': 'TensoRFLearningRateDecayer01',
-                    'lr_initial_tensor': 2e-2,
-                    'lr_initial_network': 1e-3,
-                    'lr_decay_ratio': 0.1,
-                    'lr_decay_iters': None,
-                },
-            ],
-            'resume_training': True,
-            'sub_batch_size': 2048,
-            'num_iterations': 25000,
-            'validation_interval': 100000,
-            'validation_chunk_size': 64 * 1024,
-            'validation_save_loss_maps': False,
-            'model_save_interval': 5000,
-            'mixed_precision_training': False,
-            'seed': numpy.random.randint(1000),
-            # 'seed': 0,
-            'device': [0, ],
-        }
-        test_configs = {
-            'Tester': f'{this_filename}/{Tester.this_filename}',
-            'test_num': test_num,
-            'test_set_num': 3,
-            'train_num': train_num,
-            'model_name': f'Model_Iter0{train_configs["num_iterations"]:05}.tar',
-            'database_name': 'NeRF_LLFF',
-            'database_dirpath': 'NeRF_LLFF/data',
-            'qa_masks_dirname': 'VSL001_VM03',
-            'resolution_suffix': train_configs['data_loader']['resolution_suffix'],
-            'scene_names': [scene_name],
-            # 'optimize_camera_params': {
-            #     'num_iterations': 1000,
-            #     'dirname': 'PEL001_PDE03',
-            # },
-            'device': [0, ],
-        }
-        start_training(train_configs)
-        start_testing(test_configs)
-        start_testing_videos(test_configs)
-        start_testing_static_videos(test_configs)
-    return
-
-
-def demo2c3() -> None:
-    train_num = 1442
-    test_num = 1442
-    scene_names = ['fern', 'flower', 'fortress', 'horns', 'leaves', 'orchids', 'room', 'trex']
-    # scene_names = ['flower', 'horns', 'room']
-
-    for scene_name in scene_names:
-        train_configs = {
-            'trainer': f'{this_filename}/{Trainer.this_filename}',
-            'train_num': train_num,
-            'description': 'TensoRF - VectorMatrix - 3 views - Sparse Depth Supervision',
+            'description': 'Simple-NeRF: 3 views',
             'database': 'NeRF_LLFF',
             'database_dirpath': 'databases/NeRF_LLFF/data',
             'data_loader': {
@@ -956,86 +494,141 @@ def demo2c3() -> None:
                     # 'dirname': 'PEL001_PDE03',
                 },
                 'sparse_depth': {
-                    'dirname': 'DEL001_DE03',
+                    'dirname': 'DE03',
                     'num_rays': 2048,
                 },
             },
             'model': {
-                'name': 'TensoRF07',
+                'name': 'SimpleNeRF17',
                 'coarse_model': {
-                    'decomposition_type': 'VectorMatrix',
-                    'num_samples_max': 1e6,
-                    'num_components_density': [16, 4, 4],
-                    'num_components_color': [48, 12, 12],
-                    'num_voxels_initial': 2097156,  # 128**3 + 4
-                    'num_voxels_final': 640 ** 3,
-                    'tensor_upsampling_iters': [2000, 3000, 4000, 5500],
-                    'num_voxels_per_sample': 0.5,
-                    'alpha_mask_update_iters': [2500],
-                    'alpha_mask_threshold': 0.0001,
-                    'ray_marching_weight_threshold': 0.0001,
+                    'num_samples': 64,
+                    'points_net_depth': 8,
+                    'views_net_depth': 1,
+                    'points_net_width': 256,
+                    'views_net_width': 128,
+                    'points_positional_encoding_degree': 10,
+                    'views_positional_encoding_degree': 4,
                     'use_view_dirs': True,
-                    'view_dependent_color': True,
-                    # 'points_positional_encoding_degree': 10,
-                    'views_positional_encoding_degree': 0,
-                    'features_positional_encoding_degree': 0,
-                    'features_dimension_color': 27,
-                    'density_offset': -10,
-                    'distance_scale': 25,
-                    'density_predictor': 'ReLU',
-                    'color_predictor': 'MLP_Features',
-                    'num_units_color_predictor': 128,
+                    'view_dependent_rgb': True,
                     'predict_visibility': False,
                 },
+                'fine_model': {
+                    'num_samples': 128,
+                    'points_net_depth': 8,
+                    'views_net_depth': 1,
+                    'points_net_width': 256,
+                    'views_net_width': 128,
+                    'points_positional_encoding_degree': 10,
+                    'views_positional_encoding_degree': 4,
+                    'use_view_dirs': True,
+                    'view_dependent_rgb': True,
+                    'predict_visibility': False,
+                },
+                'augmentations': [
+                    {
+                        'name': 'points_augmentation',
+                        'coarse_model': {
+                            'points_net_depth': 8,
+                            'views_net_depth': 1,
+                            'points_net_width': 256,
+                            'views_net_width': 128,
+                            'points_positional_encoding_degree': 10,
+                            'points_sigma_positional_encoding_degree': 3,
+                            'views_positional_encoding_degree': 4,
+                            'use_view_dirs': True,
+                            'view_dependent_rgb': True,
+                            'predict_visibility': False,
+                        },
+                        # 'fine_model': {
+                        #     'points_net_depth': 8,
+                        #     'views_net_depth': 1,
+                        #     'points_net_width': 256,
+                        #     'views_net_width': 128,
+                        #     'points_positional_encoding_degree': 10,
+                        #     'points_sigma_positional_encoding_degree': 3,
+                        #     'views_positional_encoding_degree': 4,
+                        #     'use_view_dirs': True,
+                        #     'view_dependent_rgb': True,
+                        #     'predict_visibility': False,
+                        # }
+                    },
+                    {
+                        'name': 'views_augmentation',
+                        'coarse_model': {
+                            'points_net_depth': 8,
+                            'views_net_depth': 1,
+                            'points_net_width': 256,
+                            'views_net_width': 128,
+                            'points_positional_encoding_degree': 10,
+                            'use_view_dirs': False,
+                            'view_dependent_rgb': False,
+                            'predict_visibility': False,
+                        },
+                        # 'fine_model': {
+                        #     'points_net_depth': 8,
+                        #     'views_net_depth': 1,
+                        #     'points_net_width': 256,
+                        #     'views_net_width': 128,
+                        #     'points_positional_encoding_degree': 10,
+                        #     'use_view_dirs': False,
+                        #     'view_dependent_rgb': False,
+                        #     'predict_visibility': False,
+                        # }
+                    },
+                ],
                 'learn_camera_focal_length': False,
                 'learn_camera_rotation': False,
                 'learn_camera_translation': False,
-                'chunk': 4 * 1024,
+                'chunk': 4*1024,
                 'lindisp': False,
+                'netchunk': 16*1024,
                 'perturb': True,
+                'raw_noise_std': 1.0,
                 'white_bkgd': False,
             },
             'losses': [
                 {
-                    'name': 'MSE12',
+                    'name': 'MSE14',
                     'weight': 1,
                 },
                 {
-                    'name': 'SparseDepthMSE12',
+                    'name': 'SparseDepthMSE14',
                     'weight': 0.1,
                 },
-                # {
-                #     'name': 'L1Loss01',
-                #     'weight': 0,
-                # },
                 {
-                    'name': 'TotalVariationLoss02',
-                    'weight': 1,
-                    'weight_density': 1e-2,
-                    'weight_color': 1e-2,
+                    'name': 'AugmentationsDepthLoss11',
+                    'iter_weights': {
+                        '0': 0, '10000': 0.1
+                    },
+                    'rmse_threshold': 0.1,
+                    'patch_size': [5, 5],
+                },
+                {
+                    'name': 'CoarseFineConsistencyLoss34',
+                    'iter_weights': {
+                        '0': 0, '10000': 0.1
+                    },
+                    'rmse_threshold': 0.1,
+                    'patch_size': [5, 5],
                 },
             ],
             'optimizers': [
                 {
                     'name': 'optimizer_main',
                     'beta1': 0.9,
-                    'beta2': 0.99,
-                    'lr_decayer_name': 'TensoRFLearningRateDecayer01',
-                    'lr_initial_tensor': 2e-2,
-                    'lr_initial_network': 1e-3,
-                    'lr_decay_ratio': 0.1,
-                    'lr_decay_iters': None,
+                    'beta2': 0.999,
+                    'lr_decayer_name': 'NeRFLearningRateDecayer03',
+                    'lr_initial': 5e-4,
+                    'lr_decay': 250,
                 },
             ],
             'resume_training': True,
-            # 'sub_batch_size': 2048,
-            'sub_batch_size': 1024,
-            'num_iterations': 25000,
-            # 'num_iterations': 10000,
-            'validation_interval': 100000,
+            'sub_batch_size': 4096,
+            'num_iterations': 100000,
+            'validation_interval': 1000000,
             'validation_chunk_size': 64 * 1024,
             'validation_save_loss_maps': False,
-            'model_save_interval': 5000,
+            'model_save_interval': 10000,
             'mixed_precision_training': False,
             'seed': numpy.random.randint(1000),
             # 'seed': 0,
@@ -1046,10 +639,10 @@ def demo2c3() -> None:
             'test_num': test_num,
             'test_set_num': 3,
             'train_num': train_num,
-            'model_name': f'Model_Iter0{train_configs["num_iterations"]:05}.tar',
+            'model_name': f'Model_Iter{train_configs["num_iterations"]:06}.tar',
             'database_name': 'NeRF_LLFF',
             'database_dirpath': 'NeRF_LLFF/data',
-            'qa_masks_dirname': 'VSL001_VM03',
+            'qa_masks_dirname': 'VM03',
             'resolution_suffix': train_configs['data_loader']['resolution_suffix'],
             'scene_names': [scene_name],
             # 'optimize_camera_params': {
@@ -1061,21 +654,224 @@ def demo2c3() -> None:
         start_training(train_configs)
         start_testing(test_configs)
         start_testing_videos(test_configs)
-        # start_testing_static_videos(test_configs)
+        start_testing_static_videos(test_configs)
     return
 
 
-def demo2d3() -> None:
-    train_num = 1496
-    test_num = 1496
-    # scene_names = ['fern', 'flower', 'fortress', 'horns', 'leaves', 'orchids', 'room', 'trex']
-    scene_names = ['flower', 'horns', 'room']
+def demo1c() -> None:
+    train_num = 1143
+    test_num = 1143
+    scene_names = ['fern', 'flower', 'fortress', 'horns', 'leaves', 'orchids', 'room', 'trex']
 
     for scene_name in scene_names:
         train_configs = {
             'trainer': f'{this_filename}/{Trainer.this_filename}',
             'train_num': train_num,
-            'description': 'TensoRF - VectorMatrix - 3 views - Points and Views Augmentation',
+            'description': 'Simple-NeRF: 4 views',
+            'database': 'NeRF_LLFF',
+            'database_dirpath': 'databases/NeRF_LLFF/data',
+            'data_loader': {
+                'data_loader_name': 'NerfLlffDataLoader07',
+                'data_preprocessor_name': 'DataPreprocessor09',
+                'train_set_num': 4,
+                'scene_names': [scene_name],
+                'resolution_suffix': '_down4',
+                'recenter_camera_poses': True,
+                'bd_factor': 0.75,
+                'spherify': False,
+                'ndc': True,
+                'batching': True,
+                'downsampling_factor': 1,
+                'num_rays': 2048,
+                'precrop_fraction': 1,
+                'precrop_iterations': -1,
+                'camera_params': {
+                    'load_database_intrinsics': True,
+                    'load_database_extrinsics': True,
+                    # 'load_noisy_intrinsics': True,
+                    # 'load_noisy_extrinsics': True,
+                    # 'dirname': 'PEL001_PDE03',
+                },
+                'scene_data': {
+                    'load_database_bounds': True,
+                    # 'load_noisy_bounds': True,
+                    # 'dirname': 'PEL001_PDE03',
+                },
+                'sparse_depth': {
+                    'dirname': 'DE04',
+                    'num_rays': 2048,
+                },
+            },
+            'model': {
+                'name': 'SimpleNeRF17',
+                'coarse_model': {
+                    'num_samples': 64,
+                    'points_net_depth': 8,
+                    'views_net_depth': 1,
+                    'points_net_width': 256,
+                    'views_net_width': 128,
+                    'points_positional_encoding_degree': 10,
+                    'views_positional_encoding_degree': 4,
+                    'use_view_dirs': True,
+                    'view_dependent_rgb': True,
+                    'predict_visibility': False,
+                },
+                'fine_model': {
+                    'num_samples': 128,
+                    'points_net_depth': 8,
+                    'views_net_depth': 1,
+                    'points_net_width': 256,
+                    'views_net_width': 128,
+                    'points_positional_encoding_degree': 10,
+                    'views_positional_encoding_degree': 4,
+                    'use_view_dirs': True,
+                    'view_dependent_rgb': True,
+                    'predict_visibility': False,
+                },
+                'augmentations': [
+                    {
+                        'name': 'points_augmentation',
+                        'coarse_model': {
+                            'points_net_depth': 8,
+                            'views_net_depth': 1,
+                            'points_net_width': 256,
+                            'views_net_width': 128,
+                            'points_positional_encoding_degree': 10,
+                            'points_sigma_positional_encoding_degree': 3,
+                            'views_positional_encoding_degree': 4,
+                            'use_view_dirs': True,
+                            'view_dependent_rgb': True,
+                            'predict_visibility': False,
+                        },
+                        # 'fine_model': {
+                        #     'points_net_depth': 8,
+                        #     'views_net_depth': 1,
+                        #     'points_net_width': 256,
+                        #     'views_net_width': 128,
+                        #     'points_positional_encoding_degree': 10,
+                        #     'points_sigma_positional_encoding_degree': 3,
+                        #     'views_positional_encoding_degree': 4,
+                        #     'use_view_dirs': True,
+                        #     'view_dependent_rgb': True,
+                        #     'predict_visibility': False,
+                        # }
+                    },
+                    {
+                        'name': 'views_augmentation',
+                        'coarse_model': {
+                            'points_net_depth': 8,
+                            'views_net_depth': 1,
+                            'points_net_width': 256,
+                            'views_net_width': 128,
+                            'points_positional_encoding_degree': 10,
+                            'use_view_dirs': False,
+                            'view_dependent_rgb': False,
+                            'predict_visibility': False,
+                        },
+                        # 'fine_model': {
+                        #     'points_net_depth': 8,
+                        #     'views_net_depth': 1,
+                        #     'points_net_width': 256,
+                        #     'views_net_width': 128,
+                        #     'points_positional_encoding_degree': 10,
+                        #     'use_view_dirs': False,
+                        #     'view_dependent_rgb': False,
+                        #     'predict_visibility': False,
+                        # }
+                    },
+                ],
+                'learn_camera_focal_length': False,
+                'learn_camera_rotation': False,
+                'learn_camera_translation': False,
+                'chunk': 4*1024,
+                'lindisp': False,
+                'netchunk': 16*1024,
+                'perturb': True,
+                'raw_noise_std': 1.0,
+                'white_bkgd': False,
+            },
+            'losses': [
+                {
+                    'name': 'MSE14',
+                    'weight': 1,
+                },
+                {
+                    'name': 'SparseDepthMSE14',
+                    'weight': 0.1,
+                },
+                {
+                    'name': 'AugmentationsDepthLoss11',
+                    'iter_weights': {
+                        '0': 0, '10000': 0.1
+                    },
+                    'rmse_threshold': 0.1,
+                    'patch_size': [5, 5],
+                },
+                {
+                    'name': 'CoarseFineConsistencyLoss34',
+                    'iter_weights': {
+                        '0': 0, '10000': 0.1
+                    },
+                    'rmse_threshold': 0.1,
+                    'patch_size': [5, 5],
+                },
+            ],
+            'optimizers': [
+                {
+                    'name': 'optimizer_main',
+                    'beta1': 0.9,
+                    'beta2': 0.999,
+                    'lr_decayer_name': 'NeRFLearningRateDecayer03',
+                    'lr_initial': 5e-4,
+                    'lr_decay': 250,
+                },
+            ],
+            'resume_training': True,
+            'sub_batch_size': 4096,
+            'num_iterations': 100000,
+            'validation_interval': 1000000,
+            'validation_chunk_size': 64 * 1024,
+            'validation_save_loss_maps': False,
+            'model_save_interval': 10000,
+            'mixed_precision_training': False,
+            'seed': numpy.random.randint(1000),
+            # 'seed': 0,
+            'device': [0, ],
+        }
+        test_configs = {
+            'Tester': f'{this_filename}/{Tester.this_filename}',
+            'test_num': test_num,
+            'test_set_num': 4,
+            'train_num': train_num,
+            'model_name': f'Model_Iter{train_configs["num_iterations"]:06}.tar',
+            'database_name': 'NeRF_LLFF',
+            'database_dirpath': 'NeRF_LLFF/data',
+            'qa_masks_dirname': 'VM04',
+            'resolution_suffix': train_configs['data_loader']['resolution_suffix'],
+            'scene_names': [scene_name],
+            # 'optimize_camera_params': {
+            #     'num_iterations': 1000,
+            #     'dirname': 'PEL001_PDE03',
+            # },
+            'device': [0, ],
+        }
+        start_training(train_configs)
+        start_testing(test_configs)
+        start_testing_videos(test_configs)
+        start_testing_static_videos(test_configs)
+    return
+
+
+def demo2b() -> None:
+    train_num = 1546
+    test_num = 1546
+    scene_names = ['fern', 'flower', 'fortress', 'horns', 'leaves', 'orchids', 'room', 'trex']
+
+    for scene_name in scene_names:
+        train_configs = {
+            'trainer': f'{this_filename}/{Trainer.this_filename}',
+            'train_num': train_num,
+            'description': 'Simple-TensoRF: 3 views',
             'database': 'NeRF_LLFF',
             'database_dirpath': 'databases/NeRF_LLFF/data',
             'data_loader': {
@@ -1106,12 +902,12 @@ def demo2d3() -> None:
                     # 'dirname': 'PEL001_PDE03',
                 },
                 'sparse_depth': {
-                    'dirname': 'DEL001_DE03',
+                    'dirname': 'DE03',
                     'num_rays': 2048,
                 },
             },
             'model': {
-                'name': 'TensoRF07',
+                'name': 'SimpleTensoRF09',
                 'coarse_model': {
                     'decomposition_type': 'VectorMatrix',
                     'num_samples_max': 1e6,
@@ -1174,38 +970,6 @@ def demo2d3() -> None:
                             'predict_visibility': False,
                         },
                     },
-                    # {
-                    #     'name': 'views_augmentation',
-                    #     'coarse_model': {
-                    #         'decomposition_type': 'VectorMatrix',
-                    #         'num_samples_max': 1e6,
-                    #         'num_components_density': [16, 4, 4],
-                    #         'num_components_color': [48, 12, 12],
-                    #         'bounding_box': [
-                    #             [-1.5, -1.67, -1.0],
-                    #             [+1.5, +1.67, +1.0],
-                    #         ],
-                    #         'num_voxels_initial': 2097156,  # 128**3 + 4
-                    #         'num_voxels_final': 640 ** 3,
-                    #         'tensor_upsampling_iters': [2000, 3000, 4000, 5500],
-                    #         'num_voxels_per_sample': 0.5,
-                    #         'alpha_mask_update_iters': [2500],
-                    #         'alpha_mask_threshold': 0.0001,
-                    #         'ray_marching_weight_threshold': 0.0001,
-                    #         'use_view_dirs': False,
-                    #         'view_dependent_color': False,
-                    #         # 'points_positional_encoding_degree': 10,
-                    #         'views_positional_encoding_degree': 0,
-                    #         'features_positional_encoding_degree': 0,
-                    #         'features_dimension_color': 27,
-                    #         'density_offset': -10,
-                    #         'distance_scale': 25,
-                    #         'density_predictor': 'ReLU',
-                    #         'color_predictor': 'MLP_Features',
-                    #         'num_units_color_predictor': 128,
-                    #         'predict_visibility': False,
-                    #     },
-                    # }
                 ],
                 'learn_camera_focal_length': False,
                 'learn_camera_rotation': False,
@@ -1240,7 +1004,7 @@ def demo2d3() -> None:
                     'models_to_regularize': {'points_augmentation_coarse': 1, 'views_augmentation_coarse': 1}
                 },
                 {
-                    'name': 'AugmentationsDepthLoss15',
+                    'name': 'AugmentationsDepthLoss11',
                     'iter_weights': {'0': 0, '1000': 0.1},
                     'rmse_threshold': 0.1,
                     'patch_size': [5, 5],
@@ -1259,10 +1023,8 @@ def demo2d3() -> None:
                 },
             ],
             'resume_training': True,
-            # 'sub_batch_size': 2048,
-            'sub_batch_size': 1024,
+            'sub_batch_size': 4096,
             'num_iterations': 25000,
-            # 'num_iterations': 10000,
             'validation_interval': 100000,
             'validation_chunk_size': 64 * 1024,
             'validation_save_loss_maps': False,
@@ -1280,7 +1042,7 @@ def demo2d3() -> None:
             'model_name': f'Model_Iter0{train_configs["num_iterations"]:05}.tar',
             'database_name': 'NeRF_LLFF',
             'database_dirpath': 'NeRF_LLFF/data',
-            'qa_masks_dirname': 'VSL001_VM03',
+            'qa_masks_dirname': 'VM03',
             'resolution_suffix': train_configs['data_loader']['resolution_suffix'],
             'scene_names': [scene_name],
             # 'optimize_camera_params': {
@@ -1296,729 +1058,10 @@ def demo2d3() -> None:
     return
 
 
-def demo4a1() -> None:
-    train_num = 1608
-    test_num = 1608
-    # scene_names = ['fern', 'flower', 'fortress', 'horns', 'leaves', 'orchids', 'room', 'trex']
-    scene_names = ['flower', 'horns', 'room']
-
-    for scene_name in scene_names:
-        train_configs = {
-            'trainer': f'{this_filename}/{Trainer.this_filename}',
-            'train_num': train_num,
-            'description': 'TensoRF - VectorMatrix - all views - true camera params with optimization',
-            'database': 'NeRF_LLFF',
-            'database_dirpath': 'databases/NeRF_LLFF/data',
-            'data_loader': {
-                'data_loader_name': 'NerfLlffDataLoader08',
-                'data_preprocessor_name': 'DataPreprocessor10',
-                'train_set_num': 1,
-                'scene_names': [scene_name],
-                'resolution_suffix': '_down4',
-                'recenter_camera_poses': True,
-                'bd_factor': 0.75,
-                'spherify': False,
-                'ndc': True,
-                'batching': True,
-                'downsampling_factor': 1,
-                'num_rays': 4096,
-                'precrop_fraction': 1,
-                'precrop_iterations': -1,
-                'camera_params': {
-                    'load_database_intrinsics': True,
-                    'load_database_extrinsics': True,
-                    # 'load_noisy_intrinsics': True,
-                    # 'load_noisy_extrinsics': True,
-                    # 'dirname': 'PEL001_PDE03',
-                },
-                'scene_data': {
-                    'load_database_bounds': True,
-                    # 'load_noisy_bounds': True,
-                    # 'dirname': 'PEL001_PDE03',
-                },
-                # 'sparse_depth': {
-                #     'dirname': 'DEL001_DE03',
-                #     'num_rays': 2048,
-                # },
-            },
-            'model': {
-                'name': 'TensoRF09',
-                'coarse_model': {
-                    'decomposition_type': 'VectorMatrix',
-                    'num_samples_max': 1e6,
-                    'num_components_density': [16, 4, 4],
-                    'num_components_color': [48, 12, 12],
-                    'num_voxels_initial': 2097156,  # 128**3 + 4
-                    'num_voxels_final': 640 ** 3,
-                    'tensor_upsampling_iters': [2000, 3000, 4000, 5500],
-                    'num_voxels_per_sample': 0.5,
-                    'alpha_mask_update_iters': [2500],
-                    'alpha_mask_threshold': 0.0001,
-                    'ray_marching_weight_threshold': 0.0001,
-                    'use_view_dirs': True,
-                    'view_dependent_color': True,
-                    # 'points_positional_encoding_degree': 10,
-                    'views_positional_encoding_degree': 0,
-                    'features_positional_encoding_degree': 0,
-                    'features_dimension_color': 27,
-                    'density_offset': -10,
-                    'distance_scale': 25,
-                    'density_predictor': 'ReLU',
-                    'color_predictor': 'MLP_Features',
-                    'num_units_color_predictor': 128,
-                    'predict_visibility': False,
-                },
-                'learn_camera_focal_length': False,
-                'learn_camera_rotation': True,
-                'learn_camera_translation': True,
-                'chunk': 4 * 1024,
-                'lindisp': False,
-                'perturb': True,
-                'white_bkgd': False,
-            },
-            'losses': [
-                {
-                    'name': 'MSE14',
-                    'weight': 1,
-                    'models_to_regularize': {'main_coarse': 1, 'main_fine': 1, 'points_augmentation_coarse': 1, 'views_augmentation_coarse': 1},
-                },
-                # {
-                #     'name': 'SparseDepthMSE15',
-                #     'weight': 0.1,
-                #     'models_to_regularize': {'main_coarse': 1, 'points_augmentation_coarse': 1, 'views_augmentation_coarse': 1},
-                # },
-                # {
-                #     'name': 'L1Loss01',
-                #     'weight': 0,
-                # },
-                {
-                    'name': 'TotalVariationLoss05',
-                    'weight': 1,
-                    'weight_density': 1e-2,
-                    'weight_color': 1e-2,
-                    'models_to_regularize': {'main_coarse': 1, 'main_fine': 1, 'points_augmentation_coarse': 1, 'views_augmentation_coarse': 1},
-                },
-            ],
-            'optimizers': [
-                {
-                    'name': 'optimizer_main',
-                    'beta1': 0.9,
-                    'beta2': 0.99,
-                    'lr_decayer_name': 'TensoRFLearningRateDecayer01',
-                    'lr_initial_tensor': 2e-2,
-                    'lr_initial_network': 1e-3,
-                    'lr_decay_ratio': 0.1,
-                    'lr_decay_iters': None,
-                },
-                # {
-                #     'name': 'optimizer_intrinsics',
-                #     'lr_decayer_name': 'NeRFLearningRateDecayer03',
-                #     'lr_initial': 5e-4,
-                #     'lr_decay': 250,
-                #     'beta1': 0.9,
-                #     'beta2': 0.999,
-                # },
-                {
-                    'name': 'optimizer_extrinsics',
-                    'lr_decayer_name': 'NeRFLearningRateDecayer03',
-                    'lr_initial': 5e-4,
-                    'lr_decay': 250,
-                    'beta1': 0.9,
-                    'beta2': 0.999,
-                },
-            ],
-            'resume_training': True,
-            'sub_batch_size': 2048,
-            'num_iterations': 25000,
-            'validation_interval': 100000,
-            'validation_chunk_size': 64 * 1024,
-            'validation_save_loss_maps': False,
-            'model_save_interval': 5000,
-            'mixed_precision_training': False,
-            'seed': numpy.random.randint(1000),
-            # 'seed': 0,
-            'device': [0, ],
-        }
-        test_configs = {
-            'Tester': f'{this_filename}/{Tester.this_filename}',
-            'test_num': test_num,
-            'test_set_num': 1,
-            'train_num': train_num,
-            'model_name': f'Model_Iter0{train_configs["num_iterations"]:05}.tar',
-            'database_name': 'NeRF_LLFF',
-            'database_dirpath': 'NeRF_LLFF/data',
-            'qa_masks_dirname': 'VSL001_VM03',
-            'resolution_suffix': train_configs['data_loader']['resolution_suffix'],
-            'scene_names': [scene_name],
-            # 'optimize_camera_params': {
-            #     'num_iterations': 1000,
-            #     'dirname': 'PEL001_PDE03',
-            # },
-            'device': [0, ],
-        }
-        start_training(train_configs)
-        start_testing(test_configs)
-        start_testing_videos(test_configs)
-        start_testing_static_videos(test_configs)
-    return
-
-
-def demo4b3() -> None:
-    train_num = 1601
-    test_num = 1601
-    # scene_names = ['fern', 'flower', 'fortress', 'horns', 'leaves', 'orchids', 'room', 'trex']
-    scene_names = ['flower', 'horns', 'room']
-
-    for scene_name in scene_names:
-        train_configs = {
-            'trainer': f'{this_filename}/{Trainer.this_filename}',
-            'train_num': train_num,
-            'description': 'TensoRF - VectorMatrix - 3 views - noisy camera params',
-            'database': 'NeRF_LLFF',
-            'database_dirpath': 'databases/NeRF_LLFF/data',
-            'data_loader': {
-                'data_loader_name': 'NerfLlffDataLoader08',
-                'data_preprocessor_name': 'DataPreprocessor10',
-                'train_set_num': 3,
-                'scene_names': [scene_name],
-                'resolution_suffix': '_down4',
-                'recenter_camera_poses': True,
-                'bd_factor': 0.75,
-                'spherify': False,
-                'ndc': True,
-                'batching': True,
-                'downsampling_factor': 1,
-                'num_rays': 4096,
-                'precrop_fraction': 1,
-                'precrop_iterations': -1,
-                'camera_params': {
-                    'load_database_intrinsics': False,
-                    'load_database_extrinsics': False,
-                    'load_noisy_intrinsics': True,
-                    'load_noisy_extrinsics': True,
-                    'dirname': 'PEL001_PDE03',
-                },
-                'scene_data': {
-                    'load_database_bounds': False,
-                    'load_noisy_bounds': True,
-                    'dirname': 'PEL001_PDE03',
-                },
-                # 'sparse_depth': {
-                #     'dirname': 'DEL001_DE03',
-                #     'num_rays': 2048,
-                # },
-            },
-            'model': {
-                'name': 'TensoRF09',
-                'coarse_model': {
-                    'decomposition_type': 'VectorMatrix',
-                    'num_samples_max': 1e6,
-                    'num_components_density': [16, 4, 4],
-                    'num_components_color': [48, 12, 12],
-                    'num_voxels_initial': 2097156,  # 128**3 + 4
-                    'num_voxels_final': 640 ** 3,
-                    'tensor_upsampling_iters': [2000, 3000, 4000, 5500],
-                    'num_voxels_per_sample': 0.5,
-                    'alpha_mask_update_iters': [2500],
-                    'alpha_mask_threshold': 0.0001,
-                    'ray_marching_weight_threshold': 0.0001,
-                    'use_view_dirs': True,
-                    'view_dependent_color': True,
-                    # 'points_positional_encoding_degree': 10,
-                    'views_positional_encoding_degree': 0,
-                    'features_positional_encoding_degree': 0,
-                    'features_dimension_color': 27,
-                    'density_offset': -10,
-                    'distance_scale': 25,
-                    'density_predictor': 'ReLU',
-                    'color_predictor': 'MLP_Features',
-                    'num_units_color_predictor': 128,
-                    'predict_visibility': False,
-                },
-                'learn_camera_focal_length': False,
-                'learn_camera_rotation': True,
-                'learn_camera_translation': True,
-                'chunk': 4 * 1024,
-                'lindisp': False,
-                'perturb': True,
-                'white_bkgd': False,
-            },
-            'losses': [
-                {
-                    'name': 'MSE14',
-                    'weight': 1,
-                    'models_to_regularize': {'main_coarse': 1, 'main_fine': 1, 'points_augmentation_coarse': 1, 'views_augmentation_coarse': 1},
-                },
-                # {
-                #     'name': 'SparseDepthMSE15',
-                #     'weight': 0.1,
-                #     'models_to_regularize': {'main_coarse': 1, 'points_augmentation_coarse': 1, 'views_augmentation_coarse': 1},
-                # },
-                # {
-                #     'name': 'L1Loss01',
-                #     'weight': 0,
-                # },
-                {
-                    'name': 'TotalVariationLoss05',
-                    'weight': 1,
-                    'weight_density': 1e-2,
-                    'weight_color': 1e-2,
-                    'models_to_regularize': {'main_coarse': 1, 'main_fine': 1, 'points_augmentation_coarse': 1, 'views_augmentation_coarse': 1},
-                },
-            ],
-            'optimizers': [
-                {
-                    'name': 'optimizer_main',
-                    'beta1': 0.9,
-                    'beta2': 0.99,
-                    'lr_decayer_name': 'TensoRFLearningRateDecayer01',
-                    'lr_initial_tensor': 2e-2,
-                    'lr_initial_network': 1e-3,
-                    'lr_decay_ratio': 0.1,
-                    'lr_decay_iters': None,
-                },
-                # {
-                #     'name': 'optimizer_intrinsics',
-                #     'lr_decayer_name': 'NeRFLearningRateDecayer03',
-                #     'lr_initial': 5e-4,
-                #     'lr_decay': 250,
-                #     'beta1': 0.9,
-                #     'beta2': 0.999,
-                # },
-                {
-                    'name': 'optimizer_extrinsics',
-                    'lr_decayer_name': 'NeRFLearningRateDecayer03',
-                    'lr_initial': 5e-4,
-                    'lr_decay': 250,
-                    'beta1': 0.9,
-                    'beta2': 0.999,
-                },
-            ],
-            'resume_training': True,
-            'sub_batch_size': 2048,
-            'num_iterations': 25000,
-            'validation_interval': 100000,
-            'validation_chunk_size': 64 * 1024,
-            'validation_save_loss_maps': False,
-            'model_save_interval': 5000,
-            'mixed_precision_training': False,
-            'seed': numpy.random.randint(1000),
-            # 'seed': 0,
-            'device': [0, ],
-        }
-        test_configs = {
-            'Tester': f'{this_filename}/{Tester.this_filename}',
-            'test_num': test_num,
-            'test_set_num': 3,
-            'train_num': train_num,
-            'model_name': f'Model_Iter0{train_configs["num_iterations"]:05}.tar',
-            'database_name': 'NeRF_LLFF',
-            'database_dirpath': 'NeRF_LLFF/data',
-            'qa_masks_dirname': 'VSL001_VM03',
-            'resolution_suffix': train_configs['data_loader']['resolution_suffix'],
-            'scene_names': [scene_name],
-            'optimize_camera_params': {
-                'num_iterations': 1000,
-                'dirname': 'PEL001_PDE03',
-            },
-            'device': [0, ],
-        }
-        start_training(train_configs)
-        start_testing(test_configs)
-        start_testing_videos(test_configs)
-        start_testing_static_videos(test_configs)
-    return
-
-
-def demo4c3() -> None:
-    train_num = 1602
-    test_num = 1602
-    # scene_names = ['fern', 'flower', 'fortress', 'horns', 'leaves', 'orchids', 'room', 'trex']
-    scene_names = ['flower', 'horns', 'room']
-
-    for scene_name in scene_names:
-        train_configs = {
-            'trainer': f'{this_filename}/{Trainer.this_filename}',
-            'train_num': train_num,
-            'description': 'TensoRF - VectorMatrix - 3 views - noisy camera params - sparse depth',
-            'database': 'NeRF_LLFF',
-            'database_dirpath': 'databases/NeRF_LLFF/data',
-            'data_loader': {
-                'data_loader_name': 'NerfLlffDataLoader08',
-                'data_preprocessor_name': 'DataPreprocessor10',
-                'train_set_num': 3,
-                'scene_names': [scene_name],
-                'resolution_suffix': '_down4',
-                'recenter_camera_poses': True,
-                'bd_factor': 0.75,
-                'spherify': False,
-                'ndc': True,
-                'batching': True,
-                'downsampling_factor': 1,
-                'num_rays': 2048,
-                'precrop_fraction': 1,
-                'precrop_iterations': -1,
-                'camera_params': {
-                    'load_database_intrinsics': False,
-                    'load_database_extrinsics': False,
-                    'load_noisy_intrinsics': True,
-                    'load_noisy_extrinsics': True,
-                    'dirname': 'PEL001_PDE03',
-                },
-                'scene_data': {
-                    'load_database_bounds': False,
-                    'load_noisy_bounds': True,
-                    'dirname': 'PEL001_PDE03',
-                },
-                'sparse_depth': {
-                    'dirname': 'PEL001_PDE03',
-                    'num_rays': 2048,
-                },
-            },
-            'model': {
-                'name': 'TensoRF09',
-                'coarse_model': {
-                    'decomposition_type': 'VectorMatrix',
-                    'num_samples_max': 1e6,
-                    'num_components_density': [16, 4, 4],
-                    'num_components_color': [48, 12, 12],
-                    'num_voxels_initial': 2097156,  # 128**3 + 4
-                    'num_voxels_final': 640 ** 3,
-                    'tensor_upsampling_iters': [2000, 3000, 4000, 5500],
-                    'num_voxels_per_sample': 0.5,
-                    'alpha_mask_update_iters': [2500],
-                    'alpha_mask_threshold': 0.0001,
-                    'ray_marching_weight_threshold': 0.0001,
-                    'use_view_dirs': True,
-                    'view_dependent_color': True,
-                    # 'points_positional_encoding_degree': 10,
-                    'views_positional_encoding_degree': 0,
-                    'features_positional_encoding_degree': 0,
-                    'features_dimension_color': 27,
-                    'density_offset': -10,
-                    'distance_scale': 25,
-                    'density_predictor': 'ReLU',
-                    'color_predictor': 'MLP_Features',
-                    'num_units_color_predictor': 128,
-                    'predict_visibility': False,
-                },
-                'learn_camera_focal_length': False,
-                'learn_camera_rotation': True,
-                'learn_camera_translation': True,
-                'chunk': 4 * 1024,
-                'lindisp': False,
-                'perturb': True,
-                'white_bkgd': False,
-            },
-            'losses': [
-                {
-                    'name': 'MSE14',
-                    'weight': 1,
-                    'models_to_regularize': {'main_coarse': 1, 'main_fine': 1, 'points_augmentation_coarse': 1, 'views_augmentation_coarse': 1},
-                },
-                {
-                    'name': 'SparseDepthMSE15',
-                    'weight': 0.1,
-                    'models_to_regularize': {'main_coarse': 1, 'points_augmentation_coarse': 1, 'views_augmentation_coarse': 1},
-                },
-                # {
-                #     'name': 'L1Loss01',
-                #     'weight': 0,
-                # },
-                {
-                    'name': 'TotalVariationLoss05',
-                    'weight': 1,
-                    'weight_density': 1e-2,
-                    'weight_color': 1e-2,
-                    'models_to_regularize': {'main_coarse': 1, 'main_fine': 1, 'points_augmentation_coarse': 1, 'views_augmentation_coarse': 1},
-                },
-            ],
-            'optimizers': [
-                {
-                    'name': 'optimizer_main',
-                    'beta1': 0.9,
-                    'beta2': 0.99,
-                    'lr_decayer_name': 'TensoRFLearningRateDecayer01',
-                    'lr_initial_tensor': 2e-2,
-                    'lr_initial_network': 1e-3,
-                    'lr_decay_ratio': 0.1,
-                    'lr_decay_iters': None,
-                },
-                # {
-                #     'name': 'optimizer_intrinsics',
-                #     'lr_decayer_name': 'NeRFLearningRateDecayer03',
-                #     'lr_initial': 5e-4,
-                #     'lr_decay': 250,
-                #     'beta1': 0.9,
-                #     'beta2': 0.999,
-                # },
-                {
-                    'name': 'optimizer_extrinsics',
-                    'lr_decayer_name': 'NeRFLearningRateDecayer03',
-                    'lr_initial': 5e-4,
-                    'lr_decay': 250,
-                    'beta1': 0.9,
-                    'beta2': 0.999,
-                },
-            ],
-            'resume_training': True,
-            'sub_batch_size': 2048,
-            'num_iterations': 25000,
-            'validation_interval': 100000,
-            'validation_chunk_size': 64 * 1024,
-            'validation_save_loss_maps': False,
-            'model_save_interval': 5000,
-            'mixed_precision_training': False,
-            'seed': numpy.random.randint(1000),
-            # 'seed': 0,
-            'device': [0, ],
-        }
-        test_configs = {
-            'Tester': f'{this_filename}/{Tester.this_filename}',
-            'test_num': test_num,
-            'test_set_num': 3,
-            'train_num': train_num,
-            'model_name': f'Model_Iter0{train_configs["num_iterations"]:05}.tar',
-            'database_name': 'NeRF_LLFF',
-            'database_dirpath': 'NeRF_LLFF/data',
-            'qa_masks_dirname': 'VSL001_VM03',
-            'resolution_suffix': train_configs['data_loader']['resolution_suffix'],
-            'scene_names': [scene_name],
-            'optimize_camera_params': {
-                'num_iterations': 1000,
-                'dirname': 'PEL001_PDE03',
-            },
-            'device': [0, ],
-        }
-        start_training(train_configs)
-        start_testing(test_configs)
-        start_testing_videos(test_configs)
-        start_testing_static_videos(test_configs)
-    return
-
-
-def demo4d3() -> None:
-    train_num = 1603
-    test_num = 1603
-    # scene_names = ['fern', 'flower', 'fortress', 'horns', 'leaves', 'orchids', 'room', 'trex']
-    scene_names = ['flower', 'horns', 'room']
-
-    for scene_name in scene_names:
-        train_configs = {
-            'trainer': f'{this_filename}/{Trainer.this_filename}',
-            'train_num': train_num,
-            'description': 'TensoRF - VectorMatrix - 3 views - noisy camera params - points augmentation',
-            'database': 'NeRF_LLFF',
-            'database_dirpath': 'databases/NeRF_LLFF/data',
-            'data_loader': {
-                'data_loader_name': 'NerfLlffDataLoader08',
-                'data_preprocessor_name': 'DataPreprocessor10',
-                'train_set_num': 3,
-                'scene_names': [scene_name],
-                'resolution_suffix': '_down4',
-                'recenter_camera_poses': True,
-                'bd_factor': 0.75,
-                'spherify': False,
-                'ndc': True,
-                'batching': True,
-                'downsampling_factor': 1,
-                'num_rays': 2048,
-                'precrop_fraction': 1,
-                'precrop_iterations': -1,
-                'camera_params': {
-                    'load_database_intrinsics': False,
-                    'load_database_extrinsics': False,
-                    'load_noisy_intrinsics': True,
-                    'load_noisy_extrinsics': True,
-                    'dirname': 'PEL001_PDE03',
-                },
-                'scene_data': {
-                    'load_database_bounds': False,
-                    'load_noisy_bounds': True,
-                    'dirname': 'PEL001_PDE03',
-                },
-                'sparse_depth': {
-                    'dirname': 'PEL001_PDE03',
-                    'num_rays': 2048,
-                },
-            },
-            'model': {
-                'name': 'TensoRF09',
-                'coarse_model': {
-                    'decomposition_type': 'VectorMatrix',
-                    'num_samples_max': 1e6,
-                    'num_components_density': [16, 4, 4],
-                    'num_components_color': [48, 12, 12],
-                    'bounding_box': [
-                        [-1.5, -1.67, -1.0],
-                        [+1.5, +1.67, +1.0],
-                    ],
-                    'num_voxels_initial': 2097156,  # 128**3 + 4
-                    'num_voxels_final': 640 ** 3,
-                    'tensor_upsampling_iters': [2000, 3000, 4000, 5500],
-                    'num_voxels_per_sample': 0.5,
-                    'alpha_mask_update_iters': [2500],
-                    'alpha_mask_threshold': 0.0001,
-                    'ray_marching_weight_threshold': 0.0001,
-                    'use_view_dirs': True,
-                    'view_dependent_color': True,
-                    # 'points_positional_encoding_degree': 10,
-                    'views_positional_encoding_degree': 0,
-                    'features_positional_encoding_degree': 0,
-                    'features_dimension_color': 27,
-                    'density_offset': -10,
-                    'distance_scale': 25,
-                    'density_predictor': 'ReLU',
-                    'color_predictor': 'MLP_Features',
-                    'num_units_color_predictor': 128,
-                    'predict_visibility': False,
-                },
-                'augmentations': [
-                    {
-                        'name': 'points_augmentation',
-                        'coarse_model': {
-                            'decomposition_type': 'VectorMatrix',
-                            'num_samples_max': 1e6,
-                            'num_components_density': [4, 4, 4],
-                            'num_components_color': [48, 12, 12],
-                            'bounding_box': [
-                                [-1.5, -1.67, -0.5],
-                                [+1.5, +1.67, +1.0],
-                            ],
-                            'num_voxels_initial': 64**3,
-                            'num_voxels_final': 160 ** 3,
-                            'tensor_upsampling_iters': [2000, 3000, 4000, 5500],
-                            'num_voxels_per_sample': 0.5,
-                            'alpha_mask_update_iters': [2500],
-                            'alpha_mask_threshold': 0.0001,
-                            'ray_marching_weight_threshold': 0.0001,
-                            'use_view_dirs': True,
-                            'view_dependent_color': True,
-                            # 'points_positional_encoding_degree': 10,
-                            'views_positional_encoding_degree': 0,
-                            'features_positional_encoding_degree': 0,
-                            'features_dimension_color': 27,
-                            'density_offset': -10,
-                            'distance_scale': 25,
-                            'density_predictor': 'ReLU',
-                            'color_predictor': 'MLP_Features',
-                            'num_units_color_predictor': 128,
-                            'predict_visibility': False,
-                        },
-                    },
-                ],
-                'learn_camera_focal_length': False,
-                'learn_camera_rotation': True,
-                'learn_camera_translation': True,
-                'chunk': 4 * 1024,
-                'lindisp': False,
-                'perturb': True,
-                'white_bkgd': False,
-            },
-            'losses': [
-                {
-                    'name': 'MSE14',
-                    'weight': 1,
-                    'models_to_regularize': {'main_coarse': 1, 'main_fine': 1, 'points_augmentation_coarse': 1, 'views_augmentation_coarse': 1},
-                },
-                {
-                    'name': 'SparseDepthMSE15',
-                    'weight': 0.1,
-                    'models_to_regularize': {'main_coarse': 1, 'points_augmentation_coarse': 1, 'views_augmentation_coarse': 1},
-                },
-                # {
-                #     'name': 'L1Loss01',
-                #     'weight': 0,
-                # },
-                {
-                    'name': 'TotalVariationLoss05',
-                    'weight': 1,
-                    'weight_density': 1e-2,
-                    'weight_color': 1e-2,
-                    'models_to_regularize': {'main_coarse': 1, 'main_fine': 1, 'points_augmentation_coarse': 1, 'views_augmentation_coarse': 1},
-                },
-                {
-                    'name': 'MassConcentrationLoss07',
-                    'iter_weights': {'0': 0, '5000': 0.01},
-                    'num_bins': 5,
-                    'models_to_regularize': {'points_augmentation_coarse': 1, 'views_augmentation_coarse': 1}
-                },
-                {
-                    'name': 'AugmentationsDepthLoss15',
-                    'iter_weights': {'0': 0, '1000': 0.1},
-                    'rmse_threshold': 0.1,
-                    'patch_size': [5, 5],
-                },
-            ],
-            'optimizers': [
-                {
-                    'name': 'optimizer_main',
-                    'beta1': 0.9,
-                    'beta2': 0.99,
-                    'lr_decayer_name': 'TensoRFLearningRateDecayer01',
-                    'lr_initial_tensor': 2e-2,
-                    'lr_initial_network': 1e-3,
-                    'lr_decay_ratio': 0.1,
-                    'lr_decay_iters': None,
-                },
-                # {
-                #     'name': 'optimizer_intrinsics',
-                #     'lr_decayer_name': 'NeRFLearningRateDecayer03',
-                #     'lr_initial': 5e-4,
-                #     'lr_decay': 250,
-                #     'beta1': 0.9,
-                #     'beta2': 0.999,
-                # },
-                {
-                    'name': 'optimizer_extrinsics',
-                    'lr_decayer_name': 'NeRFLearningRateDecayer03',
-                    'lr_initial': 5e-4,
-                    'lr_decay': 250,
-                    'beta1': 0.9,
-                    'beta2': 0.999,
-                },
-            ],
-            'resume_training': True,
-            'sub_batch_size': 2048,
-            'num_iterations': 25000,
-            'validation_interval': 100000,
-            'validation_chunk_size': 64 * 1024,
-            'validation_save_loss_maps': False,
-            'model_save_interval': 5000,
-            'mixed_precision_training': False,
-            'seed': numpy.random.randint(1000),
-            # 'seed': 0,
-            'device': [0, ],
-        }
-        test_configs = {
-            'Tester': f'{this_filename}/{Tester.this_filename}',
-            'test_num': test_num,
-            'test_set_num': 3,
-            'train_num': train_num,
-            'model_name': f'Model_Iter0{train_configs["num_iterations"]:05}.tar',
-            'database_name': 'NeRF_LLFF',
-            'database_dirpath': 'NeRF_LLFF/data',
-            'qa_masks_dirname': 'VSL001_VM03',
-            'resolution_suffix': train_configs['data_loader']['resolution_suffix'],
-            'scene_names': [scene_name],
-            'optimize_camera_params': {
-                'num_iterations': 1000,
-                'dirname': 'PEL001_PDE03',
-            },
-            'device': [0, ],
-        }
-        start_training(train_configs)
-        start_testing(test_configs)
-        start_testing_videos(test_configs)
-        start_testing_static_videos(test_configs)
-    return
-
-
 def demo_resume_training():
-    train_num = 1441
-    test_num = 1441
-    # scene_names = ['fern', 'flower', 'fortress', 'horns', 'leaves', 'orchids', 'room', 'trex']
-    scene_names = ['fern', 'fortress', 'leaves', 'orchids', 'trex']
+    train_num = 1142
+    test_num = 1142
+    scene_names = ['fern', 'flower', 'fortress', 'horns', 'leaves', 'orchids', 'room', 'trex']
 
     for scene_name in scene_names:
         train_configs = {
@@ -2042,29 +1085,21 @@ def demo_resume_training():
             'database_name': 'NeRF_LLFF',
             'database_dirpath': 'NeRF_LLFF/data',
             'resolution_suffix': train_configs['data_loader']['resolution_suffix'],
-            'qa_masks_dirname': 'VSL001_VM03',
+            'qa_masks_dirname': 'VM03',
             'scene_names': [scene_name],
             # 'scene_names': ['horns'],
             'device': [0, ],
         }
         start_training(train_configs)
-        gc.collect()
-        torch.cuda.empty_cache()
         start_testing(test_configs)
-        gc.collect()
-        torch.cuda.empty_cache()
         start_testing_videos(test_configs)
-        gc.collect()
-        torch.cuda.empty_cache()
         start_testing_static_videos(test_configs)
-        gc.collect()
-        torch.cuda.empty_cache()
     return
 
 
 def demo_resume_testing():
-    train_num = 1546
-    test_num = 1546
+    train_num = 1142
+    test_num = 1142
     test_configs = {
         'Tester': f'{this_filename}/{Tester.this_filename}',
         'test_num': test_num,
@@ -2074,7 +1109,7 @@ def demo_resume_testing():
         'database_name': 'NeRF_LLFF',
         'database_dirpath': 'NeRF_LLFF/data',
         'resolution_suffix': '_down4',
-        'qa_masks_dirname': 'VSL001_VM03',
+        'qa_masks_dirname': 'VM03',
         'scene_names': ['fern', 'flower', 'fortress', 'horns', 'leaves', 'orchids', 'room', 'trex'],
         # 'scene_names': ['horns'],
         'device': [0, ],
@@ -2086,18 +1121,10 @@ def demo_resume_testing():
 
 
 def main() -> None:
-    # demo1b()
-    # demo2a1()
-    # demo2a2()
-    # demo2b3()
-    # demo2c3()
-    # demo2d3()
-    # demo4a1()
-    # demo4b3()
-    # demo4c3()
-    # demo4d3()
-    # demo_resume_training()
-    # demo_resume_testing()
+    demo1a()
+    demo1b()
+    demo1c()
+    demo2b()
     return
 
 

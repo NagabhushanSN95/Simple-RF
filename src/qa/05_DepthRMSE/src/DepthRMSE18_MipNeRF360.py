@@ -31,7 +31,9 @@ class DepthRMSE:
 
     @staticmethod
     def compute_depth_rmse(gt_depth: numpy.ndarray, eval_depth: numpy.ndarray):
-        error = gt_depth.astype('float') - eval_depth.astype('float')
+        scaled_gt_depth = gt_depth / numpy.median(gt_depth)
+        scaled_eval_depth = eval_depth / numpy.median(gt_depth)
+        error = scaled_gt_depth.astype('float') - scaled_eval_depth.astype('float')
         rmse = numpy.sqrt(numpy.mean(numpy.square(error)))
         return rmse
 
