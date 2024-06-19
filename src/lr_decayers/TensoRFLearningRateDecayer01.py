@@ -1,8 +1,8 @@
 # Shree KRISHNAya Namaha
 # Learning Rate Decayer
 # Extended from NeRFLearningRateDecayer02.py. Learing Rate Decayer used in TensoRF.
-# Author: Nagabhushan S N
-# Last Modified: 12/07/2023
+# Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil
+# Last Modified: 20/06/2024
 
 from pathlib import Path
 

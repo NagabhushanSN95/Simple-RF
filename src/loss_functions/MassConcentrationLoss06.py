@@ -2,8 +2,8 @@
 # Loss on sigma to consolidate weights/mass in augmented models. This is based on the entropy regularization in InfoNeRF paper.
 # Modified MassConcentrationLoss04.py by binning weights before computing entropy.
 # Supports NeRF16 and TensoRF07
-# Author: Nagabhushan S N, Harsha Mupparaju
-# Last Modified: 10/11/2023
+# Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil, Harsha Mupparaju
+# Last Modified: 20/06/2024
 
 from pathlib import Path
 

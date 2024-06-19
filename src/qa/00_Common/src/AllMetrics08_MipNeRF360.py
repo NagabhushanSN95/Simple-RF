@@ -1,7 +1,7 @@
 # Shree KRISHNAya Namaha
 # Runs all metrics serially
-# Author: Nagabhushan S N
-# Last Modified: 21/02/2024
+# Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil
+# Last Modified: 20/06/2024
 
 import argparse
 import datetime

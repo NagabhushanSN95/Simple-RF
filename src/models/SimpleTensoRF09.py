@@ -1,7 +1,7 @@
 # Shree KRISHNAya Namaha
 # Extended from TensoRF07.py. Bug fixes w.r.t. optimizing camera parameters
-# Author: Nagabhushan S N
-# Last Modified: 24/11/2023
+# Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil
+# Last Modified: 20/06/2024
 
 import abc
 

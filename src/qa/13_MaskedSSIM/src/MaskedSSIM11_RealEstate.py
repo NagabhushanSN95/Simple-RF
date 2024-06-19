@@ -1,7 +1,7 @@
 # Shree KRISHNAya Namaha
 # Masked SSIM measure between predicted frames and ground truth frames
-# Author: Nagabhushan S N
-# Last Modified: 28/04/2023
+# Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil
+# Last Modified: 20/06/2024
 
 import argparse
 import datetime

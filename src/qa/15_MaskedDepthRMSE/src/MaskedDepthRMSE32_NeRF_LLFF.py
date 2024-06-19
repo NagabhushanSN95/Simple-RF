@@ -1,7 +1,7 @@
 # Shree KRISHNAya Namaha
 # Masked RMSE measure between predicted depths and depths from dense input NeRF
-# Author: Nagabhushan S N
-# Last Modified: 27/04/2023
+# Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil
+# Last Modified: 20/06/2024
 
 import argparse
 import datetime

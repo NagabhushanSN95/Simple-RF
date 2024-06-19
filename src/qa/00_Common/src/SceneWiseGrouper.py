@@ -1,7 +1,7 @@
 # Shree KRISHNAya Namaha
 # Groups QA scores scene-wise
-# Author: Nagabhushan S N
-# Last Modified: 06/11/2022
+# Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil
+# Last Modified: 20/06/2024
 
 import pandas
 

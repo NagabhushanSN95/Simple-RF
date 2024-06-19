@@ -1,7 +1,7 @@
 # Shree KRISHNAya Namaha
 # Extended from Trainer09.py. Optimizer code updated for optimizing camera parameters
-# Author: Nagabhushan S N
-# Last Modified: 24/11/2023
+# Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil
+# Last Modified: 20/06/2024
 
 import datetime
 import json

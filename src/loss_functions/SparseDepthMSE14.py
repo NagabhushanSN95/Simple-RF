@@ -2,8 +2,8 @@
 # Sparse Depth MSE loss function for main and augmented models. Supports regularizing specified models only. Supports
 # NeRF16 and TensoRF07.
 # Combining SparseDepthMSE12.py and SparseDepthMSE13.py. A config added that specifies which models to regularize.
-# Author: Nagabhushan S N
-# Last Modified: 11/11/2023
+# Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil
+# Last Modified: 20/06/2024
 
 from pathlib import Path
 

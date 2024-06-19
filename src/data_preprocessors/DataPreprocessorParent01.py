@@ -1,7 +1,7 @@
 # Shree KRISHNAya Namaha
 # A parent class for all dataloaders
-# Author: Nagabhushan S N
-# Last Modified: 18/07/2022
+# Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil
+# Last Modified: 20/06/2024
 
 import abc
 from pathlib import Path

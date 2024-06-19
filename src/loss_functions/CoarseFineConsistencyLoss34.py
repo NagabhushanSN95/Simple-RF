@@ -2,7 +2,7 @@
 # Depth MSE loss function between Main Coarse NeRF and Main Fine NeRF. Reprojection error (patch-wise) is employed
 # to determine the more accurate depth estimate.
 # Extended from CoarseFineConsistencyLoss32.py. Implements LossFunctionParent03.py. Supports TensoRF.
-# Last Modified: 03/10/2023
+# Last Modified: 20/06/2024
 
 import torch
 from torch import Tensor

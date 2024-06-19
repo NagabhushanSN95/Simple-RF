@@ -1,7 +1,7 @@
 # Shree KRISHNAya Namaha
 # Creates train-test sets.
-# Author: Nagabhushan S N
-# Last Modified: 23/03/2024
+# Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil
+# Last Modified: 20/06/2024
 
 import time
 import datetime

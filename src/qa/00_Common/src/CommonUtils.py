@@ -1,7 +1,7 @@
 # Shree KRISHNya Namaha
 # Some common utilities
-# Author: Nagabhushan S N
-# Last Modified: 04/10/2021
+# Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil
+# Last Modified: 20/06/2024
 
 
 def start_matlab_engine():

@@ -2,7 +2,7 @@
 # Loads NeRF_LLFF Data for NeRF, Colmap sparse depth, dense depth, visibility prior for NeRF-LLFF Dataset. Supports
 # TensoRF and Camera params optimization.
 # Extended from NerfLlffDataLoader07. Loads depths from noisy camera params directory if enabled.
-# Last Modified: 25/11/2023
+# Last Modified: 20/06/2024
 
 from pathlib import Path
 from typing import Optional

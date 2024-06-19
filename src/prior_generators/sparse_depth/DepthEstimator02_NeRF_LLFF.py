@@ -1,7 +1,7 @@
 # Shree KRISHNAya Namaha
 # Estimates depth on NeRF-LLFF scenes
-# Author: Nagabhushan S N
-# Last Modified: 15/06/2023
+# Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil
+# Last Modified: 20/06/2024
 
 import datetime
 import json

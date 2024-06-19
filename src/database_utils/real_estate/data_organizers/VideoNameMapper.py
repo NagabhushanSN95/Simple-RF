@@ -1,7 +1,7 @@
 # Shree KRISHNAya Namaha
 # Maps video name to scene num
-# Author: Nagabhushan S N
-# Last Modified: 22/10/2023
+# Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil
+# Last Modified: 20/06/2024
 
 import datetime
 import shutil

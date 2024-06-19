@@ -1,7 +1,7 @@
 # Shree KRISHNAya Namaha
 # A Factory method that returns a Data Loader
-# Author: Nagabhushan S N
-# Last Modified: 23/07/2022
+# Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil
+# Last Modified: 20/06/2024
 
 import importlib.util
 import inspect

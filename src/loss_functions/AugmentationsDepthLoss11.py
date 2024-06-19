@@ -4,7 +4,7 @@
 # frame, larger depth is considered more accurate.
 # Extended from AugmentationsDepthLoss08.py to mark larger depth as more accurate when reprojected patches are outside
 # the frame.
-# Last Modified: 10/11/2023
+# Last Modified: 20/06/2024
 
 import torch
 from torch import Tensor

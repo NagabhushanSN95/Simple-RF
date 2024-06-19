@@ -1,8 +1,8 @@
 # Shree KRISHNAya Namaha
 # Learning Rate Decayer
 # Extended from NeRFLearningRateDecayer02.py. Supports multiple learning rates in same optimizer.
-# Author: Nagabhushan S N
-# Last Modified: 03/10/2023
+# Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil
+# Last Modified: 20/06/2024
 
 from pathlib import Path
 

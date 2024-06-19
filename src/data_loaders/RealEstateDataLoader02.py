@@ -1,7 +1,7 @@
 # Shree KRISHNAYa Namaha
 # Loads RealEstate Data for NeRF, Colmap sparse depth, dense depth, visibility prior from RealEstate-10K dataset.
-# Author: Nagabhushan S N
-# Last Modified: 29/03/2023
+# Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil
+# Last Modified: 20/06/2024
 
 from pathlib import Path
 from typing import Optional

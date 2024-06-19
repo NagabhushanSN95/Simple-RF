@@ -1,7 +1,7 @@
 # Shree KRISHNAya Namaha
 # Extended from RealEstateTrainerTester07.py. All augmentations are clubbed into a single list.
-# Author: Nagabhushan S N
-# Last Modified: 09/06/2023
+# Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil
+# Last Modified: 20/06/2024
 
 import datetime
 import os

@@ -1,7 +1,7 @@
 # Shree KRISHNAya Namaha
 # MSE loss between coarse and fine depths for main model.
 # Extended from CoarseFineConsistencyLoss31.py. Implements LossFunctionParent03.py. Supports TensoRF.
-# Last Modified: 03/10/2023
+# Last Modified: 20/06/2024
 
 from pathlib import Path
 

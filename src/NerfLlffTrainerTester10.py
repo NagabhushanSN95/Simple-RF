@@ -1,7 +1,7 @@
 # Shree KRISHNAya Namaha
 # Extended from NerfLlffTrainerTester09.py. Supports TensoRF model also.
-# Author: Nagabhushan S N
-# Last Modified: 12/07/2023
+# Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil
+# Last Modified: 20/06/2024
 
 import datetime
 import os

@@ -2,8 +2,8 @@
 # MSE loss function for main and augmented models. Supports regularizing specified models only. Supports NeRF16 and
 # TensoRF07.
 # Combining MSE12.py and MSE13.py. A config added that specifies which models to regularize.
-# Author: Nagabhushan S N
-# Last Modified: 11/11/2023
+# Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil
+# Last Modified: 20/06/2024
 
 from pathlib import Path
 

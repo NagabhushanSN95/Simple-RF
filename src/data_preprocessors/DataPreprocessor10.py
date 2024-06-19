@@ -2,8 +2,8 @@
 # Preprocesses data for NeRF, MipNeRF, Colmap sparse depth, dense depth, visibility prior. Supports TensoRF and
 # camera params optimization.
 # Extended from DataPreprocessor09.py to support sparse depth for camera params optimization.
-# Author: Nagabhushan S N
-# Last Modified: 25/11/2023
+# Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil
+# Last Modified: 20/06/2024
 
 from typing import Optional, Union, List
 

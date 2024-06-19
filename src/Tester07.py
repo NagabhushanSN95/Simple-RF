@@ -1,8 +1,8 @@
 # Shree KRISHNAya Namaha
 # Common tester across datasets
 # Extended from Tester06.py. Supports camera params optimization.
-# Author: Nagabhushan S N
-# Last Modified: 26/12/2023
+# Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil
+# Last Modified: 20/06/2024
 
 import json
 from collections import OrderedDict

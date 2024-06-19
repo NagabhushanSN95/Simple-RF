@@ -1,7 +1,7 @@
 # Shree KRISHNAya Namaha
 # Utility functions for losses
-# Author: Nagabhushan S N
-# Last Modified: 11/09/22
+# Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil
+# Last Modified: 20/06/2024
 
 
 def update_loss_map_dict(old_dict: dict, new_dict: dict, suffix: str):
