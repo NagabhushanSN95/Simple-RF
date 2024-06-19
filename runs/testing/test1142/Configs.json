@@ -1,0 +1,24 @@
+{
+    "Tester": "NerfLlffTrainerTester10/Tester07",
+    "test_num": 1142,
+    "test_set_num": 3,
+    "train_num": 1142,
+    "model_name": "Model_Iter100000.tar",
+    "database_name": "NeRF_LLFF",
+    "database_dirpath": "NeRF_LLFF/data",
+    "resolution_suffix": "_down4",
+    "qa_masks_dirname": "VM03",
+    "scene_names": [
+        "fern",
+        "flower",
+        "fortress",
+        "horns",
+        "leaves",
+        "orchids",
+        "room",
+        "trex"
+    ],
+    "device": [
+        0
+    ]
+}
