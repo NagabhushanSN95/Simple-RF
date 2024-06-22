@@ -540,8 +540,7 @@ def get_optimizers(configs, model):
 
 def start_training(configs: dict):
     root_dirpath = Path('../')
-    project_dirpath = root_dirpath / '../../../../'
-    database_dirpath = project_dirpath / configs['database_dirpath']
+    database_dirpath = root_dirpath / 'data/databases' / configs['database_dirpath']
     output_dirpath = root_dirpath / f'runs/training/train{configs["train_num"]:04}'
     
     scene_ids = configs['data_loader']['scene_ids']

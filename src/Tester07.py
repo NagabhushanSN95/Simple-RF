@@ -28,13 +28,12 @@ this_filename = this_filepath.stem
 
 
 class NerfTester:
-    def __init__(self, train_configs: dict, model_configs: dict, test_configs: dict, root_dirpath: Path, project_dirpath: Path):
+    def __init__(self, train_configs: dict, model_configs: dict, test_configs: dict, root_dirpath: Path):
         train_configs['device'] = test_configs['device']
         self.train_configs = train_configs
         self.test_configs = test_configs
         self.root_dirpath = root_dirpath
-        self.project_dirpath = project_dirpath
-        self.database_dirpath = self.project_dirpath / 'databases' / self.test_configs['database_dirpath']
+        self.database_dirpath = self.root_dirpath / 'data/databases' / self.test_configs['database_dirpath']
         self.data_preprocessor = None
         self.model = None
         self.model_configs = model_configs
@@ -248,7 +247,6 @@ def save_configs(output_dirpath: Path, configs: dict, filename: Optional[str] = 
 def start_testing(test_configs: dict, scenes_data: dict, output_dir_suffix: str = '', *, save_depth: bool = False,
                   save_depth_var: bool = False, save_visibility: bool = False, optimize_camera_params: bool = False):
     root_dirpath = Path('../')
-    project_dirpath = root_dirpath / '../../../../'
     output_dirpath = root_dirpath / f"runs/testing/test{test_configs['test_num']:04}"
 
     train_num = test_configs['train_num']
@@ -280,7 +278,7 @@ def start_testing(test_configs: dict, scenes_data: dict, output_dir_suffix: str 
             continue
 
         # Build the model
-        tester = NerfTester(train_configs, trained_model_configs, test_configs, root_dirpath, project_dirpath)
+        tester = NerfTester(train_configs, trained_model_configs, test_configs, root_dirpath)
         tester.load_model(model_path)
 
         # Test and save

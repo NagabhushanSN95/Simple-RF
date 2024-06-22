@@ -40,8 +40,7 @@ def save_video(path: Path, video: numpy.ndarray):
 
 def start_training(train_configs: dict) -> None:
     root_dirpath = Path('../')
-    project_dirpath = root_dirpath / '../../../../'
-    database_dirpath = project_dirpath / train_configs['database_dirpath']
+    database_dirpath = root_dirpath / 'data/databases' / train_configs['database_dirpath']
 
     # Setup output dirpath
     output_dirpath = root_dirpath / f'runs/training/train{train_configs["train_num"]:04}'
@@ -63,8 +62,7 @@ def start_training(train_configs: dict) -> None:
 
 def start_testing(test_configs: dict):
     root_dirpath = Path('../')
-    project_dirpath = root_dirpath / '../../../../'
-    database_dirpath = project_dirpath / 'databases' / test_configs['database_dirpath']
+    database_dirpath = root_dirpath / 'data/databases' / test_configs['database_dirpath']
     optimize_camera_params = 'optimize_camera_params' in test_configs
 
     output_dirpath = root_dirpath / f"runs/testing/test{test_configs['test_num']:04}"
@@ -120,8 +118,8 @@ def start_testing(test_configs: dict):
     Tester.start_testing(test_configs, scenes_data, save_depth=True, save_depth_var=True, save_visibility=False, optimize_camera_params=optimize_camera_params)
 
     # Run QA
-    qa_filepath = Path('../../../../qa/00_Common/src/AllMetrics02_NeRF_LLFF.py')
-    gt_depth_dirpath = Path('../../../literature/007_NeRFs_Simplified/runs/testing/test1001')
+    qa_filepath = Path('qa/00_Common/src/AllMetrics02_NeRF_LLFF.py')
+    gt_depth_dirpath = Path('../data/dense_input_radiance_fields/NeRF/runs/testing/test1001')
     cmd = f'python {qa_filepath.absolute().as_posix()} ' \
           f'--demo_function_name demo2 ' \
           f'--pred_videos_dirpath {output_dirpath.absolute().as_posix()} ' \
@@ -138,8 +136,7 @@ def start_testing(test_configs: dict):
 
 def start_testing_videos(test_configs: dict):
     root_dirpath = Path('../')
-    project_dirpath = root_dirpath / '../../../../'
-    database_dirpath = project_dirpath / 'databases' / test_configs['database_dirpath']
+    database_dirpath = root_dirpath / 'data/databases' / test_configs['database_dirpath']
 
     output_dirpath = root_dirpath / f"runs/testing/test{test_configs['test_num']:04}"
     output_dirpath.mkdir(parents=True, exist_ok=True)
@@ -197,8 +194,7 @@ def start_testing_static_videos(test_configs: dict):
     :return:
     """
     root_dirpath = Path('../')
-    project_dirpath = root_dirpath / '../../../../'
-    database_dirpath = project_dirpath / 'databases' / test_configs['database_dirpath']
+    database_dirpath = root_dirpath / 'data/databases' / test_configs['database_dirpath']
 
     output_dirpath = root_dirpath / f"runs/testing/test{test_configs['test_num']:04}"
     output_dirpath.mkdir(parents=True, exist_ok=True)
