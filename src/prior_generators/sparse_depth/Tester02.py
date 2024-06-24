@@ -13,8 +13,8 @@ import pandas
 import skimage.io
 from scipy.spatial.transform import Rotation
 
-import llff.poses.colmap_read_model as read_model
-from colmapUtils.read_write_model import read_images_binary, read_points3d_binary
+import libraries.llff.poses.colmap_read_model as read_model
+from libraries.colmapUtils.read_write_model import read_images_binary, read_points3d_binary
 from database import COLMAPDatabase, array_to_blob
 
 this_filepath = Path(__file__)
