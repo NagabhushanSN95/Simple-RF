@@ -90,8 +90,8 @@ def demo1():
     """
     gen_configs = {
         'generator': this_filename,
-        'gen_num': 2,
-        'gen_set_num': 2,
+        'gen_num': 12,
+        'gen_set_num': 12,
         'database_name': 'RealEstate10K',
         'database_dirpath': 'RealEstate10K/data',
     }
@@ -99,8 +99,8 @@ def demo1():
 
     gen_configs = {
         'generator': this_filename,
-        'gen_num': 3,
-        'gen_set_num': 3,
+        'gen_num': 13,
+        'gen_set_num': 13,
         'database_name': 'RealEstate10K',
         'database_dirpath': 'RealEstate10K/data',
     }
@@ -108,8 +108,8 @@ def demo1():
 
     gen_configs = {
         'generator': this_filename,
-        'gen_num': 4,
-        'gen_set_num': 4,
+        'gen_num': 14,
+        'gen_set_num': 14,
         'database_name': 'RealEstate10K',
         'database_dirpath': 'RealEstate10K/data',
     }
