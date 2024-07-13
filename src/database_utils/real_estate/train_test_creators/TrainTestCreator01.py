@@ -86,7 +86,7 @@ def demo1():
 
     configs = {
         'TrainTestCreator': this_filename,
-        'set_num': 2,
+        'set_num': 12,
         'scene_nums': [0, 1, 3, 4, 6],
         'train_views_density': 'sparse',
         'num_train_frames': 2,
@@ -96,7 +96,7 @@ def demo1():
 
     configs = {
         'TrainTestCreator': this_filename,
-        'set_num': 3,
+        'set_num': 13,
         'scene_nums': [0, 1, 3, 4, 6],
         'train_views_density': 'sparse',
         'num_train_frames': 3,
@@ -106,7 +106,7 @@ def demo1():
 
     configs = {
         'TrainTestCreator': this_filename,
-        'set_num': 4,
+        'set_num': 14,
         'scene_nums': [0, 1, 3, 4, 6],
         'train_views_density': 'sparse',
         'num_train_frames': 4,
