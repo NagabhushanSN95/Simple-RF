@@ -14,7 +14,7 @@ from torch.nn import ModuleList
 from utils import CommonUtils04 as CommonUtils
 
 
-class TensoRF(torch.nn.Module):
+class SimpleTensoRF(torch.nn.Module):
     def __init__(self, configs: dict, model_configs: dict):
         super().__init__()
         self.configs = configs

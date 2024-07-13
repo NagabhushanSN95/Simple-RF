@@ -7,7 +7,7 @@
     "data_loader": {
         "data_loader_name": "RealEstateDataLoader02",
         "data_preprocessor_name": "DataPreprocessor10",
-        "train_set_num": 2,
+        "train_set_num": 12,
         "scene_nums": [
             0,
             1,
@@ -32,7 +32,7 @@
             "load_database_bounds": true
         },
         "sparse_depth": {
-            "dirname": "DE02",
+            "dirname": "DE12",
             "num_rays": 2048
         }
     },

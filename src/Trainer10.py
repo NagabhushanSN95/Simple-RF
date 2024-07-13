@@ -22,8 +22,8 @@ from matplotlib import pyplot
 from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
 
-from data_loaders.DataLoaderFactory import get_data_loader
-from data_preprocessors.DataPreprocessorFactory import get_data_preprocessor
+from data_loaders.DataLoaderFactory01 import get_data_loader
+from data_preprocessors.DataPreprocessorFactory01 import get_data_preprocessor
 from data_preprocessors.DataPreprocessorParent01 import DataPreprocessorParent
 from loss_functions.LossComputer03 import LossComputer
 from lr_decayers.LearningRateDecayerFactory02 import get_lr_decayer
@@ -540,7 +540,7 @@ def get_optimizers(configs, model):
 
 def start_training(configs: dict):
     root_dirpath = Path('../')
-    database_dirpath = root_dirpath / 'data/databases' / configs['database_dirpath']
+    database_dirpath = root_dirpath / 'data' / configs['database_dirpath']
     output_dirpath = root_dirpath / f'runs/training/train{configs["train_num"]:04}'
     
     scene_ids = configs['data_loader']['scene_ids']

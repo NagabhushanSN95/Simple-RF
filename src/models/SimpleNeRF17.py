@@ -12,7 +12,7 @@ from torch.nn import ModuleList
 from utils import CommonUtils04 as CommonUtils
 
 
-class NeRF(torch.nn.Module):
+class SimpleNeRF(torch.nn.Module):
     def __init__(self, configs: dict, model_configs: dict):
         super().__init__()
         self.configs = configs

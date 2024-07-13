@@ -259,8 +259,8 @@ def demo1a() -> None:
             'database': 'NeRF_LLFF',
             'database_dirpath': 'databases/NeRF_LLFF/data',
             'data_loader': {
-                'data_loader_name': 'NerfLlffDataLoader07',
-                'data_preprocessor_name': 'DataPreprocessor09',
+                'data_loader_name': 'NerfLlffDataLoader08',
+                'data_preprocessor_name': 'DataPreprocessor10',
                 'train_set_num': 2,
                 'scene_names': [scene_name],
                 'resolution_suffix': '_down4',
@@ -382,10 +382,21 @@ def demo1a() -> None:
                 {
                     'name': 'MSE14',
                     'weight': 1,
+                    "models_to_regularize": {
+                        "main_coarse": 1,
+                        "main_fine": 1,
+                        "points_augmentation_coarse": 1,
+                        "views_augmentation_coarse": 1
+                    }                    
                 },
                 {
                     'name': 'SparseDepthMSE14',
                     'weight': 0.1,
+                    "models_to_regularize": {
+                        "main_coarse": 1,
+                        "points_augmentation_coarse": 1,
+                        "views_augmentation_coarse": 1
+                    }
                 },
                 {
                     'name': 'AugmentationsDepthLoss11',
@@ -420,7 +431,7 @@ def demo1a() -> None:
             'validation_interval': 1000000,
             'validation_chunk_size': 64 * 1024,
             'validation_save_loss_maps': False,
-            'model_save_interval': 10000,
+            'model_save_interval': 25000,
             'mixed_precision_training': False,
             'seed': numpy.random.randint(1000),
             # 'seed': 0,
@@ -463,8 +474,8 @@ def demo1b() -> None:
             'database': 'NeRF_LLFF',
             'database_dirpath': 'databases/NeRF_LLFF/data',
             'data_loader': {
-                'data_loader_name': 'NerfLlffDataLoader07',
-                'data_preprocessor_name': 'DataPreprocessor09',
+                'data_loader_name': 'NerfLlffDataLoader08',
+                'data_preprocessor_name': 'DataPreprocessor10',
                 'train_set_num': 3,
                 'scene_names': [scene_name],
                 'resolution_suffix': '_down4',
@@ -586,10 +597,21 @@ def demo1b() -> None:
                 {
                     'name': 'MSE14',
                     'weight': 1,
+                    "models_to_regularize": {
+                        "main_coarse": 1,
+                        "main_fine": 1,
+                        "points_augmentation_coarse": 1,
+                        "views_augmentation_coarse": 1
+                    }
                 },
                 {
                     'name': 'SparseDepthMSE14',
                     'weight': 0.1,
+                    "models_to_regularize": {
+                        "main_coarse": 1,
+                        "points_augmentation_coarse": 1,
+                        "views_augmentation_coarse": 1
+                    }                
                 },
                 {
                     'name': 'AugmentationsDepthLoss11',
@@ -624,7 +646,7 @@ def demo1b() -> None:
             'validation_interval': 1000000,
             'validation_chunk_size': 64 * 1024,
             'validation_save_loss_maps': False,
-            'model_save_interval': 10000,
+            'model_save_interval': 25000,
             'mixed_precision_training': False,
             'seed': numpy.random.randint(1000),
             # 'seed': 0,
@@ -667,8 +689,8 @@ def demo1c() -> None:
             'database': 'NeRF_LLFF',
             'database_dirpath': 'databases/NeRF_LLFF/data',
             'data_loader': {
-                'data_loader_name': 'NerfLlffDataLoader07',
-                'data_preprocessor_name': 'DataPreprocessor09',
+                'data_loader_name': 'NerfLlffDataLoader08',
+                'data_preprocessor_name': 'DataPreprocessor10',
                 'train_set_num': 4,
                 'scene_names': [scene_name],
                 'resolution_suffix': '_down4',
@@ -790,10 +812,21 @@ def demo1c() -> None:
                 {
                     'name': 'MSE14',
                     'weight': 1,
+                    "models_to_regularize": {
+                        "main_coarse": 1,
+                        "main_fine": 1,
+                        "points_augmentation_coarse": 1,
+                        "views_augmentation_coarse": 1
+                    }
                 },
                 {
                     'name': 'SparseDepthMSE14',
                     'weight': 0.1,
+                    "models_to_regularize": {
+                        "main_coarse": 1,
+                        "points_augmentation_coarse": 1,
+                        "views_augmentation_coarse": 1
+                    }
                 },
                 {
                     'name': 'AugmentationsDepthLoss11',
@@ -828,7 +861,7 @@ def demo1c() -> None:
             'validation_interval': 1000000,
             'validation_chunk_size': 64 * 1024,
             'validation_save_loss_maps': False,
-            'model_save_interval': 10000,
+            'model_save_interval': 25000,
             'mixed_precision_training': False,
             'seed': numpy.random.randint(1000),
             # 'seed': 0,
@@ -871,8 +904,8 @@ def demo2b() -> None:
             'database': 'NeRF_LLFF',
             'database_dirpath': 'databases/NeRF_LLFF/data',
             'data_loader': {
-                'data_loader_name': 'NerfLlffDataLoader07',
-                'data_preprocessor_name': 'DataPreprocessor09',
+                'data_loader_name': 'NerfLlffDataLoader08',
+                'data_preprocessor_name': 'DataPreprocessor10',
                 'train_set_num': 3,
                 'scene_names': [scene_name],
                 'resolution_suffix': '_down4',
@@ -989,9 +1022,9 @@ def demo2b() -> None:
                 {
                     'name': 'TotalVariationLoss05',
                     'weight': 1e-2,
-                    'models_to_regularize': {'main_coarse': 1, 'main_fine': 1, 'points_augmentation_coarse': 1, 'views_augmentation_coarse': 1},
                     'weight_density': 1,
                     'weight_color': 1,
+                    'models_to_regularize': {'main_coarse': 1, 'main_fine': 1, 'points_augmentation_coarse': 1, 'views_augmentation_coarse': 1},
                 },
                 {
                     'name': 'MassConcentrationLoss07',
