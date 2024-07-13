@@ -12,7 +12,10 @@ Official code release accompanying the paper - "Simple-RF: Regularizing Sparse I
 ### Python Environment
 Environment details are available in `EnvironmentData/SimpleRF.yml`. The environment can be created using conda
 ```shell
+cd EnvironmentData/
 conda env create -f SimpleRF.yml
+conda activate SimpleRF
+cd ..
 ```
 
 ### Add the source directory to PYTHONPATH
@@ -31,8 +34,8 @@ Please follow the instructions in [prior_generators/sparse_depth/README.md](src/
 The files `RealEstateTrainerTester01.py`, `NerfLlffTrainerTester01.py` contain the code for training, testing and quality assessment along with the configs for the respective databases.
 ```shell
 cd src/
-python RealEstateTrainerTester01.py
-python NerfLlffTrainerTester01.py
+python RealEstateTrainerTester08.py
+python NerfLlffTrainerTester10.py
 cd ../
 ```
 
