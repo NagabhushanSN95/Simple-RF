@@ -158,7 +158,7 @@
         }
     ],
     "resume_training": true,
-    "sub_batch_size": 4098,
+    "sub_batch_size": 4096,
     "num_iterations": 100000,
     "validation_interval": 1000000,
     "validation_chunk_size": 65536,
