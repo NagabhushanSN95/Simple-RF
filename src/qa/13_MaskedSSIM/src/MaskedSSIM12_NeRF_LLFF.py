@@ -35,7 +35,7 @@ class SSIM:
     def compute_frame_ssim(gt_frame: numpy.ndarray, eval_frame: numpy.ndarray, mask: numpy.ndarray):
         mask_3d = numpy.stack([mask] * 3, axis=2)
         masked_eval_frame = mask_3d * eval_frame + (~mask_3d) * gt_frame
-        _, ssim_map = structural_similarity(gt_frame, masked_eval_frame, multichannel=True, gaussian_weights=True,
+        _, ssim_map = structural_similarity(gt_frame, masked_eval_frame, channel_axis=-1, gaussian_weights=True,
                                             sigma=1.5, use_sample_covariance=False, full=True)
         ssim = numpy.sum(mask_3d * ssim_map) / numpy.sum(mask_3d)
         return ssim
