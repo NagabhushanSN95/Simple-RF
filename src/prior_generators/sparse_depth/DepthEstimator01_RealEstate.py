@@ -64,14 +64,13 @@ def start_generation(gen_configs: dict):
             continue
 
         frame_nums = video_data.loc[video_data['scene_num'] == scene_num]['pred_frame_num'].to_numpy()
-        frames = [read_image(database_dirpath / f'test/database_data/{scene_num:05}/rgb/{frame_num:04}.png') for frame_num in frame_nums]
-        frames = numpy.stack(frames)
+        frames_paths = [database_dirpath / f'test/database_data/{scene_num:05}/rgb/{frame_num:04}.png' for frame_num in frame_nums]
         intrinsics_path = database_dirpath / f'test/database_data/{scene_num:05}/CameraIntrinsics.csv'
         extrinsics_path = database_dirpath / f'test/database_data/{scene_num:05}/CameraExtrinsics.csv'
         intrinsics = numpy.loadtxt(intrinsics_path.as_posix(), delimiter=',').reshape((-1, 3, 3))[frame_nums]
         extrinsics = numpy.loadtxt(extrinsics_path.as_posix(), delimiter=',').reshape((-1, 4, 4))[frame_nums]
 
-        depth_data_list, bounds_data = tester.estimate_sparse_depth(frames, extrinsics, intrinsics)
+        depth_data_list, bounds_data = tester.estimate_sparse_depth(frames_paths, extrinsics, intrinsics)
         if depth_data_list is None:
             continue
 

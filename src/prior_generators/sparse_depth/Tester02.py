@@ -38,13 +38,13 @@ class ColmapTester:
         self.tmp_dirpath.mkdir(parents=True)
         return 
     
-    def save_tmp_data(self, images: numpy.ndarray, intrinsics: numpy.ndarray, resolution: tuple = None):
+    def save_tmp_data(self, image_paths: List[Path], intrinsics: numpy.ndarray, resolution: tuple = None):
         self.sparse_dirpath.mkdir(parents=True, exist_ok=True)
         self.images_dirpath.mkdir(parents=True, exist_ok=True)
 
-        for frame_num, image in enumerate(images):
+        for frame_num, src_image_path in enumerate(image_paths):
             tgt_image_path = self.images_dirpath / f'{frame_num:04}.png'
-            self.save_image(tgt_image_path, image)
+            shutil.copy(src_image_path, tgt_image_path)
     
         # Create cameras.txt file
         if resolution is not None:
@@ -294,9 +294,9 @@ class ColmapTester:
 
         return depth_data_list, bounds_data
     
-    def estimate_sparse_depth(self, images: numpy.ndarray, extrinsics: numpy.ndarray, intrinsics: numpy.ndarray, resolution: tuple = None):
+    def estimate_sparse_depth(self, image_paths: List[Path], extrinsics: numpy.ndarray, intrinsics: numpy.ndarray, resolution: tuple = None):
         self.clean_tmp_dir()
-        camera_data = self.save_tmp_data(images, intrinsics, resolution)
+        camera_data = self.save_tmp_data(image_paths, intrinsics, resolution)
         self.run_colmap(camera_data, extrinsics)
         depth_data, bounds_data = self.compute_colmap_depth()
         return depth_data, bounds_data
