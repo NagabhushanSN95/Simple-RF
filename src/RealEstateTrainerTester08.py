@@ -257,7 +257,7 @@ def demo1a() -> None:
             'train_num': train_num,
             'description': 'Simple-NeRF: 2 views',
             'database': 'RealEstate10K',
-            'database_dirpath': 'databases/RealEstate10K/data',
+            'database_dirpath': 'RealEstate10K/data',
             'data_loader': {
                 'data_loader_name': 'RealEstateDataLoader02',
                 'data_preprocessor_name': 'DataPreprocessor10',
@@ -468,7 +468,7 @@ def demo1b() -> None:
             'train_num': train_num,
             'description': 'Simple-NeRF: 3 views',
             'database': 'RealEstate10K',
-            'database_dirpath': 'databases/RealEstate10K/data',
+            'database_dirpath': 'RealEstate10K/data',
             'data_loader': {
                 'data_loader_name': 'RealEstateDataLoader02',
                 'data_preprocessor_name': 'DataPreprocessor10',
@@ -677,7 +677,7 @@ def demo1c() -> None:
             'train_num': train_num,
             'description': 'Simple-NeRF: 4 views',
             'database': 'RealEstate10K',
-            'database_dirpath': 'databases/RealEstate10K/data',
+            'database_dirpath': 'RealEstate10K/data',
             'data_loader': {
                 'data_loader_name': 'RealEstateDataLoader02',
                 'data_preprocessor_name': 'DataPreprocessor10',
@@ -886,7 +886,7 @@ def demo2b() -> None:
             'train_num': train_num,
             'description': 'Simple-TensoRF: 3 views',
             'database': 'RealEstate10K',
-            'database_dirpath': 'databases/RealEstate10K/data',
+            'database_dirpath': 'RealEstate10K/data',
             'data_loader': {
                 'data_loader_name': 'RealEstateDataLoader02',
                 'data_preprocessor_name': 'DataPreprocessor10',

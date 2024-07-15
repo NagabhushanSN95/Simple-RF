@@ -3,7 +3,7 @@
     "train_num": 1142,
     "description": "Simple-NeRF: 3 views",
     "database": "NeRF_LLFF",
-    "database_dirpath": "databases/NeRF_LLFF/data",
+    "database_dirpath": "NeRF_LLFF/data",
     "data_loader": {
         "data_loader_name": "NerfLlffDataLoader08",
         "data_preprocessor_name": "DataPreprocessor10",

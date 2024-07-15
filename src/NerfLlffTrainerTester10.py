@@ -257,7 +257,7 @@ def demo1a() -> None:
             'train_num': train_num,
             'description': 'Simple-NeRF: 2 views',
             'database': 'NeRF_LLFF',
-            'database_dirpath': 'databases/NeRF_LLFF/data',
+            'database_dirpath': 'NeRF_LLFF/data',
             'data_loader': {
                 'data_loader_name': 'NerfLlffDataLoader08',
                 'data_preprocessor_name': 'DataPreprocessor10',
@@ -472,7 +472,7 @@ def demo1b() -> None:
             'train_num': train_num,
             'description': 'Simple-NeRF: 3 views',
             'database': 'NeRF_LLFF',
-            'database_dirpath': 'databases/NeRF_LLFF/data',
+            'database_dirpath': 'NeRF_LLFF/data',
             'data_loader': {
                 'data_loader_name': 'NerfLlffDataLoader08',
                 'data_preprocessor_name': 'DataPreprocessor10',
@@ -687,7 +687,7 @@ def demo1c() -> None:
             'train_num': train_num,
             'description': 'Simple-NeRF: 4 views',
             'database': 'NeRF_LLFF',
-            'database_dirpath': 'databases/NeRF_LLFF/data',
+            'database_dirpath': 'NeRF_LLFF/data',
             'data_loader': {
                 'data_loader_name': 'NerfLlffDataLoader08',
                 'data_preprocessor_name': 'DataPreprocessor10',
@@ -902,7 +902,7 @@ def demo2b() -> None:
             'train_num': train_num,
             'description': 'Simple-TensoRF: 3 views',
             'database': 'NeRF_LLFF',
-            'database_dirpath': 'databases/NeRF_LLFF/data',
+            'database_dirpath': 'NeRF_LLFF/data',
             'data_loader': {
                 'data_loader_name': 'NerfLlffDataLoader08',
                 'data_preprocessor_name': 'DataPreprocessor10',
@@ -1096,7 +1096,7 @@ def demo_resume_training():
         train_configs = {
             'train_num': train_num,
             'database': 'NeRF_LLFF',
-            'database_dirpath': 'databases/NeRF_LLFF/data',
+            'database_dirpath': 'NeRF_LLFF/data',
             'data_loader': {
                 'scene_names': [scene_name],
                 'resolution_suffix': '_down4',
