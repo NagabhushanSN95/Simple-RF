@@ -1,5 +1,4 @@
 # Shree KRISHNAya Namaha
-# Extended from NeRF16.py. Bug fixes w.r.t. optimizing camera parameters
 # Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil
 # Last Modified: 20/06/2024
 

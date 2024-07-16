@@ -2,7 +2,6 @@
 # Depth MSE loss function between Main Coarse NeRF and Points Augmentation. Reprojection error (patch-wise) is employed
 # to determine the more accurate depth estimate. For patches mapping outside the
 # frame, larger depth is considered more accurate.
-# Extended from AugmentationsDepthLoss08.py to mark larger depth as more accurate when reprojected patches are outside
 # the frame.
 # Last Modified: 20/06/2024
 

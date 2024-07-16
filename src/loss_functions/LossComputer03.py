@@ -1,6 +1,5 @@
 # Shree KRISHNAya Namaha
 # Computes all specified losses
-# Extended from LossComputer02.py. Model passed to loss computer
 # Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil
 # Last Modified: 20/06/2024
 

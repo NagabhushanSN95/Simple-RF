@@ -1,6 +1,5 @@
 # Shree KRISHNAya Namaha
 # Common tester across datasets
-# Extended from Tester06.py. Supports camera params optimization.
 # Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil
 # Last Modified: 20/06/2024
 

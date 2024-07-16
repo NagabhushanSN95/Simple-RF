@@ -1,5 +1,4 @@
 # Shree KRISHNAya Namaha
-# Extended from RealEstateTrainerTester07.py. All augmentations are clubbed into a single list.
 # Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil
 # Last Modified: 20/06/2024
 

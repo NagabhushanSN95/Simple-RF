@@ -1,7 +1,6 @@
 # Shree KRISHNAYa Namaha
 # Preprocesses data for NeRF, MipNeRF, Colmap sparse depth, dense depth, visibility prior. Supports TensoRF and
 # camera params optimization.
-# Extended from DataPreprocessor09.py to support sparse depth for camera params optimization.
 # Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil
 # Last Modified: 20/06/2024
 

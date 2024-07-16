@@ -1,6 +1,5 @@
 # Shree KRISHNAya Namaha
 # A Factory method that returns a Model
-# Extended from ModelFactory01.py. Also takes DataPreprocessor as input. This is just a temporary one. Needs to be cleaned.
 # Author: Nagabhushan S N
 # Last Modified: 15/09/2023
 

@@ -1,8 +1,5 @@
 # Shree KRISHNAya Namaha
-# Abstract class
-# Extended from LearningRateDecayerParent01.py. Instead of returning updated learning rate, it returns the decay factor,
-# which has to then be multiplied with the existing learning rate. This allows using a single decayers when there are
-# different initial learning rates for different parameters, but the same decay.
+# Abstract class for learning rate decayers
 # Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil
 # Last Modified: 20/06/2024
 
