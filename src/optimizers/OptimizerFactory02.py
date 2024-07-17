@@ -1,6 +1,5 @@
 # Shree KRISHNAya Namaha
 # A Factory method that returns an Optimizer
-# Extended from OptimizerFactory01.py. If lr_initial is not available, it is not provided
 # Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil
 # Last Modified: 20/06/2024
 

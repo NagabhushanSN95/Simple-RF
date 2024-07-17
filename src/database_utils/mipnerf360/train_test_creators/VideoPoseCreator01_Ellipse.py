@@ -1,6 +1,5 @@
 # Shree KRISHNAya Namaha
 # creates poses for elliptical video
-# Extended from NeRF_LLFF/VideoPoseCreator04_Spiral.py. The code to generate elliptical poses is borrowed from zip-nerf.
 # Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil
 # Last Modified: 20/06/2024
 

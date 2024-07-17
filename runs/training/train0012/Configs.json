@@ -3,11 +3,11 @@
     "train_num": 12,
     "description": "Simple-NeRF: 2 views",
     "database": "RealEstate10K",
-    "database_dirpath": "databases/RealEstate10K/data",
+    "database_dirpath": "RealEstate10K/data",
     "data_loader": {
         "data_loader_name": "RealEstateDataLoader02",
         "data_preprocessor_name": "DataPreprocessor10",
-        "train_set_num": 2,
+        "train_set_num": 12,
         "scene_nums": [
             0,
             1,
@@ -32,7 +32,7 @@
             "load_database_bounds": true
         },
         "sparse_depth": {
-            "dirname": "DE02",
+            "dirname": "DE12",
             "num_rays": 2048
         }
     },
@@ -158,7 +158,7 @@
         }
     ],
     "resume_training": true,
-    "sub_batch_size": 4098,
+    "sub_batch_size": 4096,
     "num_iterations": 100000,
     "validation_interval": 1000000,
     "validation_chunk_size": 65536,

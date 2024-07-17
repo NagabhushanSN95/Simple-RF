@@ -6,7 +6,7 @@
 import importlib.util
 import inspect
 
-from lr_decayers.LearningRateDecayerParent01 import LearningRateDecayerParent
+from lr_decayers.LearningRateDecayerParent02 import LearningRateDecayerParent
 
 
 def get_lr_decayer(configs: dict, optimizer_name: str) -> LearningRateDecayerParent:

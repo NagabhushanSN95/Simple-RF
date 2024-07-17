@@ -1,5 +1,4 @@
 # Shree KRISHNAya Namaha
-# Extended from RealEstateTrainerTester07.py. All augmentations are clubbed into a single list.
 # Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil
 # Last Modified: 20/06/2024
 
@@ -257,10 +256,10 @@ def demo1a() -> None:
             'train_num': train_num,
             'description': 'Simple-NeRF: 2 views',
             'database': 'RealEstate10K',
-            'database_dirpath': 'databases/RealEstate10K/data',
+            'database_dirpath': 'RealEstate10K/data',
             'data_loader': {
                 'data_loader_name': 'RealEstateDataLoader02',
-                'data_preprocessor_name': 'DataPreprocessor07',
+                'data_preprocessor_name': 'DataPreprocessor10',
                 'train_set_num': 12,
                 'scene_nums': [scene_num],
                 'recenter_camera_poses': True,
@@ -381,10 +380,22 @@ def demo1a() -> None:
                 {
                     'name': 'MSE14',
                     'weight': 1,
+                    "models_to_regularize": {
+                        "main_coarse": 1,
+                        "main_fine": 1,
+                        "points_augmentation_coarse": 1,
+                        "views_augmentation_coarse": 1
+                    }
                 },
                 {
                     'name': 'SparseDepthMSE14',
                     'weight': 0.1,
+                    "models_to_regularize": {
+                        "main_coarse": 1,
+
+                        "points_augmentation_coarse": 1,
+                        "views_augmentation_coarse": 1
+                    }
                 },
                 {
                     'name': 'AugmentationsDepthLoss11',
@@ -419,7 +430,7 @@ def demo1a() -> None:
             'validation_interval': 1000000,
             'validation_chunk_size': 64 * 1024,
             'validation_save_loss_maps': False,
-            'model_save_interval': 10000,
+            'model_save_interval': 25000,
             'mixed_precision_training': False,
             'seed': numpy.random.randint(1000),
             # 'seed': 0,
@@ -456,10 +467,10 @@ def demo1b() -> None:
             'train_num': train_num,
             'description': 'Simple-NeRF: 3 views',
             'database': 'RealEstate10K',
-            'database_dirpath': 'databases/RealEstate10K/data',
+            'database_dirpath': 'RealEstate10K/data',
             'data_loader': {
                 'data_loader_name': 'RealEstateDataLoader02',
-                'data_preprocessor_name': 'DataPreprocessor07',
+                'data_preprocessor_name': 'DataPreprocessor10',
                 'train_set_num': 13,
                 'scene_nums': [scene_num],
                 'recenter_camera_poses': True,
@@ -580,10 +591,21 @@ def demo1b() -> None:
                 {
                     'name': 'MSE14',
                     'weight': 1,
+                    "models_to_regularize": {
+                        "main_coarse": 1,
+                        "main_fine": 1,
+                        "points_augmentation_coarse": 1,
+                        "views_augmentation_coarse": 1
+                    }
                 },
                 {
                     'name': 'SparseDepthMSE14',
                     'weight': 0.1,
+                    "models_to_regularize": {
+                        "main_coarse": 1,
+                        "points_augmentation_coarse": 1,
+                        "views_augmentation_coarse": 1
+                    }
                 },
                 {
                     'name': 'AugmentationsDepthLoss11',
@@ -618,7 +640,7 @@ def demo1b() -> None:
             'validation_interval': 1000000,
             'validation_chunk_size': 64 * 1024,
             'validation_save_loss_maps': False,
-            'model_save_interval': 10000,
+            'model_save_interval': 25000,
             'mixed_precision_training': False,
             'seed': numpy.random.randint(1000),
             # 'seed': 0,
@@ -654,10 +676,10 @@ def demo1c() -> None:
             'train_num': train_num,
             'description': 'Simple-NeRF: 4 views',
             'database': 'RealEstate10K',
-            'database_dirpath': 'databases/RealEstate10K/data',
+            'database_dirpath': 'RealEstate10K/data',
             'data_loader': {
                 'data_loader_name': 'RealEstateDataLoader02',
-                'data_preprocessor_name': 'DataPreprocessor07',
+                'data_preprocessor_name': 'DataPreprocessor10',
                 'train_set_num': 14,
                 'scene_nums': [scene_num],
                 'recenter_camera_poses': True,
@@ -778,10 +800,21 @@ def demo1c() -> None:
                 {
                     'name': 'MSE14',
                     'weight': 1,
+                    "models_to_regularize": {
+                        "main_coarse": 1,
+                        "main_fine": 1,
+                        "points_augmentation_coarse": 1,
+                        "views_augmentation_coarse": 1
+                    }
                 },
                 {
                     'name': 'SparseDepthMSE14',
                     'weight': 0.1,
+                    "models_to_regularize": {
+                        "main_coarse": 1,
+                        "points_augmentation_coarse": 1,
+                        "views_augmentation_coarse": 1
+                    }
                 },
                 {
                     'name': 'AugmentationsDepthLoss11',
@@ -816,7 +849,7 @@ def demo1c() -> None:
             'validation_interval': 1000000,
             'validation_chunk_size': 64 * 1024,
             'validation_save_loss_maps': False,
-            'model_save_interval': 10000,
+            'model_save_interval': 25000,
             'mixed_precision_training': False,
             'seed': numpy.random.randint(1000),
             # 'seed': 0,
@@ -852,10 +885,10 @@ def demo2b() -> None:
             'train_num': train_num,
             'description': 'Simple-TensoRF: 3 views',
             'database': 'RealEstate10K',
-            'database_dirpath': 'databases/RealEstate10K/data',
+            'database_dirpath': 'RealEstate10K/data',
             'data_loader': {
                 'data_loader_name': 'RealEstateDataLoader02',
-                'data_preprocessor_name': 'DataPreprocessor07',
+                'data_preprocessor_name': 'DataPreprocessor10',
                 'train_set_num': 13,
                 'scene_nums': [scene_num],
                 'recenter_camera_poses': True,
@@ -971,9 +1004,9 @@ def demo2b() -> None:
                 {
                     'name': 'TotalVariationLoss05',
                     'weight': 1e-2,
-                    'models_to_regularize': {'main_coarse': 1, 'main_fine': 1, 'points_augmentation_coarse': 1, 'views_augmentation_coarse': 1},
                     'weight_density': 1,
                     'weight_color': 1,
+                    'models_to_regularize': {'main_coarse': 1, 'main_fine': 1, 'points_augmentation_coarse': 1, 'views_augmentation_coarse': 1},
                 },
                 {
                     'name': 'MassConcentrationLoss07',

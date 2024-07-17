@@ -1,5 +1,4 @@
 # Shree KRISHNAya Namaha
-# Extended from Trainer09.py. Optimizer code updated for optimizing camera parameters
 # Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil
 # Last Modified: 20/06/2024
 
@@ -22,8 +21,8 @@ from matplotlib import pyplot
 from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
 
-from data_loaders.DataLoaderFactory import get_data_loader
-from data_preprocessors.DataPreprocessorFactory import get_data_preprocessor
+from data_loaders.DataLoaderFactory01 import get_data_loader
+from data_preprocessors.DataPreprocessorFactory01 import get_data_preprocessor
 from data_preprocessors.DataPreprocessorParent01 import DataPreprocessorParent
 from loss_functions.LossComputer03 import LossComputer
 from lr_decayers.LearningRateDecayerFactory02 import get_lr_decayer

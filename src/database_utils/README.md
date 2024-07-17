@@ -41,7 +41,7 @@ cd ../../../
 ```
 
 ## NeRF-LLFF
-1. Download the [`nerf_llff_data.zip`](https://drive.google.com/file/d/16VnMcF1KJYxN9QId6TClMsZRahHNMW5g/view?usp=share_link) file from original release in google drive. Place the downloaded file at `Data/databases/NeRF_LLFF/data/raw/downloaded_data/nerf_llff_data.zip`.
+1. Download the [`nerf_llff_data.zip`](https://drive.google.com/file/d/16VnMcF1KJYxN9QId6TClMsZRahHNMW5g/view?usp=share_link) file from original release in google drive. Place the downloaded file at `data/databases/NeRF_LLFF/data/raw/downloaded_data/nerf_llff_data.zip`.
 
 2. Run the data extractor file:
    ```shell

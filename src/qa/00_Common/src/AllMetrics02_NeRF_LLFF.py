@@ -54,7 +54,7 @@ def run_all_qa(pred_videos_dirpath: Path, database_dirpath: Path, gt_depth_dirpa
         this_filepath.parent / '../../13_MaskedSSIM/src/MaskedSSIM12_NeRF_LLFF.py',
         this_filepath.parent / '../../14_MaskedLPIPS/src/MaskedLPIPS12_NeRF_LLFF.py',
 
-        this_filepath.parent / '../../05_DepthRMSE/src/DepthRMSE02_NeRF_LLFF.py',
+        this_filepath.parent / '../../05_DepthRMSE/src/DepthRMSE12_NeRF_LLFF.py',
         this_filepath.parent / '../../07_DepthMAE/src/DepthMAE12_NeRF_LLFF.py',
         this_filepath.parent / '../../09_DepthSROCC/src/DepthSROCC02_NeRF_LLFF.py',
         this_filepath.parent / '../../15_MaskedDepthRMSE/src/MaskedDepthRMSE32_NeRF_LLFF.py',

@@ -10,7 +10,7 @@ import numpy
 import pandas
 import skimage.io
 
-from data_loaders.DataLoaderParent import DataLoaderParent
+from data_loaders.DataLoaderParent01 import DataLoaderParent
 
 
 class RealEstateDataLoader(DataLoaderParent):

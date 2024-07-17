@@ -8,7 +8,7 @@ import inspect
 from pathlib import Path
 from typing import Optional
 
-from data_loaders.DataLoaderParent import DataLoaderParent
+from data_loaders.DataLoaderParent01 import DataLoaderParent
 
 
 def get_data_loader(configs: dict, data_dirpath: Path, mode: Optional[str]) -> DataLoaderParent:

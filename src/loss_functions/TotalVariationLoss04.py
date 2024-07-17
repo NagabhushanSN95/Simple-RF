@@ -1,6 +1,5 @@
 # Shree KRISHNAya Namaha
 # Total Variation loss function
-# Extended from TotalVariationLoss02.py for augmented models.
 # Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil
 # Last Modified: 20/06/2024
 

@@ -1,6 +1,5 @@
 # Shree KRISHNAya Namaha
 # Common Utility Functions
-# Extended from CommonUtils03.py. Supports TensoRF.
 # Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil
 # Last Modified: 20/06/2024
 

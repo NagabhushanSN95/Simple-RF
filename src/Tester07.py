@@ -1,6 +1,5 @@
 # Shree KRISHNAya Namaha
 # Common tester across datasets
-# Extended from Tester06.py. Supports camera params optimization.
 # Authors: Nagabhushan S N, Harsha Mupparaju, Adithyan Karanayil
 # Last Modified: 20/06/2024
 
@@ -16,7 +15,7 @@ import torch
 from deepdiff import DeepDiff
 from tqdm import tqdm
 
-from data_preprocessors.DataPreprocessorFactory import get_data_preprocessor
+from data_preprocessors.DataPreprocessorFactory01 import get_data_preprocessor
 from loss_functions.LossComputer03 import LossComputer
 from lr_decayers.LearningRateDecayerFactory02 import get_lr_decayer
 from models.ModelFactory02 import get_model

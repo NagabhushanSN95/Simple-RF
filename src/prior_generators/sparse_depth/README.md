@@ -9,7 +9,7 @@ python DepthEstimator02_NeRF_LLFF.py
 cd ../../../
 ```
 
-Running the above files creates a new directory `data/databases/<DATABASE_NAME>/data/all/estimated_depths`, which contains three sub-directories named `DE02,DE03,DE04` corresponding to two, three and four input-view settings. Each of these directories will contain multiple sub-directories, one for every scene in the dataset. The following tree shows an exmaple.
+Running the above files creates a new directory `data/databases/<DATABASE_NAME>/data/all/estimated_depths`, which contains three sub-directories named `DE02,DE03,DE04` for LLFF dataset and `DE12,DE13,DE14` for RealEstate dataset corresponding to two, three and four input-view settings. Each of these directories will contain multiple sub-directories, one for every scene in the dataset. The following tree shows an exmaple.
 ```
 data/databases/NeRF_LLFF/data/all/estimated_depths
 |--DE02
