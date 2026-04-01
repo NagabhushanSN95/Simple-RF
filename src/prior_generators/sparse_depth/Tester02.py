@@ -90,6 +90,7 @@ class ColmapTester:
             params = array_to_blob(params)
             # db.execute("UPDATE cameras SET params=? WHERE camera_id=?", (params, camera_id))
             db.execute("UPDATE cameras SET model=6, params=? WHERE camera_id=?", (params, camera_id))
+        db.commit()
 
         # Create images.txt file
         db_cursor = db.cursor()

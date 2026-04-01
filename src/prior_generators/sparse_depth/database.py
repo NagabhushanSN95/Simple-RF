@@ -370,6 +370,7 @@ def demo1():
     params = np.asarray(params, np.float64)
     params = array_to_blob(params)
     db.execute("UPDATE cameras SET model=6, params=? WHERE camera_id=?", (params, camera_id))
+    db.commit()
 
     # Read and check cameras.
     rows = db.execute("SELECT * FROM cameras")
